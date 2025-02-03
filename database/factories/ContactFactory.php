@@ -2,13 +2,13 @@
 
     namespace Database\Factories;
 
-    use App\Models\Category;
+    use App\Models\Contact;
     use Illuminate\Database\Eloquent\Factories\Factory;
 
     /**
-     * @extends Factory<Category>
+     * @extends Factory<Contact>
      */
-    class CategoryFactory extends Factory
+    class ContactFactory extends Factory
     {
         /**
          * Define the model's default state.
@@ -18,10 +18,10 @@
         public function definition(): array
         {
             return [
-                'name' => $this->faker->unique()->word(),
-                'slug' => $this->faker->unique()->slug(),
-                'image' => $this->faker->imageUrl(),
-                'is_active' => true,
+                'name' => $this->faker->name(),
+                'email' => $this->faker->unique()->safeEmail(),
+                'subject' => $this->faker->sentence(),
+                'message' => $this->faker->text(),
             ];
         }
     }

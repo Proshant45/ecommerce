@@ -51,7 +51,7 @@
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <h3><a href="{{$product}}/{{$product->slug}}}">{{$product->name}}</a></h3>
+                                        <h3><a href="shop/{{$product->slug}}}">{{$product->name}}</a></h3>
                                         <p class="pull-left">{{$product->price}}
 
                                         </p>

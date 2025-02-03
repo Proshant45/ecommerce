@@ -1,7 +1,7 @@
 <x-frontend.layout>
 
 
-  <!-- header-area end -->
+    <!-- header-area end -->
     <!-- .breadcumb-area start -->
     <div class="breadcumb-area bg-img-4 ptb-100">
         <div class="container">
@@ -20,9 +20,10 @@
     </div>
     <!-- .breadcumb-area end -->
     <!-- contact-area start -->
-    <div class="google-map">
+    <div class="google-map py-md-5 mx-5 ">
         <div class="contact-map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.9147703055!2d-74.11976314309273!3d40.69740344223377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbd!4v1547528325671" allowfullscreen></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.9147703055!2d-74.11976314309273!3d40.69740344223377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbd!4v1547528325671"
+                    allowfullscreen></iframe>
         </div>
     </div>
     <div class="contact-area ptb-100">
@@ -31,19 +32,29 @@
                 <div class="col-lg-8 col-12">
                     <div class="contact-form form-style">
                         <div class="cf-msg"></div>
-                        <form action="http://themepresss.com/tf/html/tohoney/mail.php" method="post" id="cf">
+                        @if (session('success'))
+                            <div class="alert alert-success">
+                                {{ session('success') }}
+                            </div>
+                        @endif
+                        <form action="/contact" method="post">
+                            @csrf
                             <div class="row">
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" placeholder="Name" id="fname" name="fname">
+                                    <input type="text" placeholder="Name" id="fname" name="name"
+                                           value=" {{old('name')}}">
                                 </div>
                                 <div class="col-12  col-sm-6">
-                                    <input type="text" placeholder="Email" id="email" name="email">
+                                    <input type="text" placeholder="Email" id="email" name="email"
+                                           value=" {{old('email')}}">
                                 </div>
                                 <div class="col-12">
-                                    <input type="text" placeholder="Subject" id="subject" name="subject">
+                                    <input type="text" placeholder="Subject" id="subject" name="subject"
+                                           value=" {{old('subject')}}">
                                 </div>
                                 <div class="col-12">
-                                    <textarea class="contact-textarea" placeholder="Message" id="msg" name="msg"></textarea>
+                                    <textarea class="contact-textarea" placeholder="message" id="msg"
+                                              name="message"></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button id="submit" name="submit">SEND MESSAGE</button>

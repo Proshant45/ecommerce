@@ -1,6 +1,5 @@
 <x-frontend.layout>
-
-
+    
     <!-- single-product-area start-->
     <div class="single-product-area ptb-100">
         <div class="container">

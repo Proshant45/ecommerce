@@ -10,12 +10,12 @@
          */
         public function up(): void
         {
-            Schema::create('categories', function (Blueprint $table) {
+            Schema::create('contacts', function (Blueprint $table) {
                 $table->id();
-                $table->string('name')->unique();
-                $table->string('slug')->unique();
-                $table->string('image', 255)->nullable();
-                $table->boolean('is_active')->default(true);
+                $table->string('name');
+                $table->string('email');
+                $table->string('subject');
+                $table->text('message');
                 $table->timestamps();
             });
         }
@@ -25,6 +25,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('categories');
+            Schema::dropIfExists('contacts');
         }
     };

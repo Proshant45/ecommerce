@@ -2,13 +2,13 @@
 
     namespace Database\Factories;
 
-    use App\Models\Category;
+    use App\Models\Image;
     use Illuminate\Database\Eloquent\Factories\Factory;
 
     /**
-     * @extends Factory<Category>
+     * @extends Factory<Image>
      */
-    class CategoryFactory extends Factory
+    class ImageFactory extends Factory
     {
         /**
          * Define the model's default state.
@@ -18,10 +18,7 @@
         public function definition(): array
         {
             return [
-                'name' => $this->faker->unique()->word(),
-                'slug' => $this->faker->unique()->slug(),
                 'image' => $this->faker->imageUrl(),
-                'is_active' => true,
             ];
         }
     }

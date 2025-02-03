@@ -3,8 +3,12 @@
     namespace App\Http\Controllers;
 
     use App\Models\Category;
+    use App\Models\Image as ImageModel;
     use App\Models\Product;
     use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Storage;
+    use Illuminate\Support\Str;
+    use Intervention\Image\Image;
 
     class ProductController extends Controller
     {
@@ -15,15 +19,15 @@
         {
             $categories = Category::latest()->get()->take(5);
             $products = Product::paginate(20);
+
             return view('frontend.shop', ['products' => $products, 'categories' => $categories]);
         }
 
-        /**
-         * Show the form for creating a new resource.
-         */
-        public function create()
+        public function show(string $slug)
         {
+            $product = Product::find($slug);
 
+            return view('frontend.single-product', ['product' => $product]);
         }
 
         /**
@@ -31,21 +35,49 @@
          */
         public function store(Request $request)
         {
-            $request->validate([
+
+            $attributes = $request->validate([
                 'name' => 'required',
-                'price' => 'required',
                 'description' => 'required',
-                'image' => 'required',
+                'price' => 'required',
+                'category' => 'required',
+                'images' => 'required',
             ]);
+            $attributes['category_id'] = $attributes['category'];
+            $attributes['slug'] = Str::slug($attributes['name']);
+
+            $images = $request->file('images');
+            $product = Product::create($attributes);
+
+            foreach ($images as $image) {
+                $img = Image::make($image)->encode('jpg');
+                $filename = uniqid('product_').'.jpg';
+                Storage::disk('public')->put('uploads/'.$filename, $img);
+                $imageData = new ImageModel();
+                $imageData->path = 'uploads/'.$filename; // This is the path you can store
+                $imageData->product_id = $product->id;
+                $imageData->name = $filename;
+                $imageData->save();
+
+            }
+
+            return redirect()->back()->with('success', 'Product created successfully');
+        }
+
+        /**
+         * Show the form for creating a new resource.
+         */
+        public function create()
+        {
+            $categories = Category::all();
+
+            return view('backend.product.create', ['categories' => $categories]);
+
         }
 
         /**
          * Display the specified resource.
          */
-        public function show(string $id)
-        {
-            //
-        }
 
         /**
          * Show the form for editing the specified resource.
@@ -70,5 +102,4 @@
         {
             //
         }
-
     }

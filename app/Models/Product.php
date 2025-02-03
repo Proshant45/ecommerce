@@ -26,5 +26,10 @@
             return $this->belongsToMany(Category::class);
         }
 
+        public function images(): hasMany
+        {
+            return $this->hasMany(Image::class);
+        }
+
 
     }
