@@ -1,6 +1,7 @@
 <?php
 
     use App\Http\Controllers\ContactController;
+    use App\Http\Controllers\CategoryController;
     use App\Http\Controllers\HomeController;
     use App\Http\Controllers\ProductController;
     use App\Http\Controllers\ProfileController;
@@ -18,6 +19,7 @@
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
     Route::get('admin/product_upload', [ProductController::class, 'create'])->name('product.create');
     Route::post('admin/product_upload', [ProductController::class, 'store'])->name('product.store');
+    Route::post('shop/{slug}', [CategoryController::class, 'show'])->name('shop.show');
 
     Route::get('/dashboard', function () {
         return view('dashboard');

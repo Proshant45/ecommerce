@@ -19,7 +19,7 @@
         public function definition(): array
         {
             return [
-                'category_id' => Category::factory(),
+
                 'name' => $this->faker->name(),
                 'slug' => $this->faker->slug(),
                 'description' => $this->faker->text(),

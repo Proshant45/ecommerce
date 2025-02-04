@@ -1,6 +1,5 @@
 <?php
 
-    use App\Models\Category;
     use Illuminate\Database\Migrations\Migration;
     use Illuminate\Database\Schema\Blueprint;
     use Illuminate\Support\Facades\Schema;
@@ -13,7 +12,6 @@
         {
             Schema::create('products', function (Blueprint $table) {
                 $table->id();
-                $table->foreignIdFor(Category::class)->constrained()->restrictOnDelete();
                 $table->string('name');
                 $table->string('slug')->unique();
                 $table->text('description');

@@ -7,52 +7,33 @@
                 <div class="col-lg-6">
                     <div class="product-single-img">
                         <div class="product-active owl-carousel">
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/1.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/2.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/3.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/4.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/5.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/6.jpg" alt="">
-                            </div>
+
+                            @foreach($product->images as $image)
+
+                                <div class="item">
+                                    <img src="{{asset("storage/".$image->path)}}" alt="">
+                                </div>
+                            @endforeach
+
+
                         </div>
                         <div class="product-thumbnil-active  owl-carousel">
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/1.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/2.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/3.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/4.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/5.jpg" alt="">
-                            </div>
-                            <div class="item">
-                                <img src="{{asset('assets')}}/images/product/product-details/6.jpg" alt="">
-                            </div>
+                            @foreach($product->images as $image)
+                                <div class="item">
+                                    <img src="{{asset("storage/".$image->path)}}" alt="">
+                                </div>
+
+                            @endforeach
+
+
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="product-single-content">
-                        <h3>Nature Honey</h3>
+                        <h3>{{$product->name}}</h3>
                         <div class="rating-wrap fix">
-                            <span class="pull-left">$219.56</span>
+                            <span class="pull-left">219.56 Taka</span>
                             <ul class="rating pull-right">
                                 <li><i class="fa fa-star"></i></li>
                                 <li><i class="fa fa-star"></i></li>
@@ -73,7 +54,10 @@
                         </ul>
                         <ul class="cetagory">
                             <li>Categories:</li>
-                            <li><a href="#">Honey</a></li>
+                            @foreach($product->categories as $category)
+                                <li><a href="#">{{$category->name}}</a></li>
+                            @endforeach
+
                         </ul>
                         <ul class="socil-icon">
                             <li>Share :</li>

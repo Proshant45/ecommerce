@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Database\Factories\CategoryFactory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+    use App\Models\Product;
+    use Database\Factories\CategoryFactory;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Category extends Model
-{
-    /** @use HasFactory<CategoryFactory> */
-    use HasFactory;
-
-    protected $fillable = ['name', 'slug', 'is_active'];
-
-    public function products(): BelongsToMany
+    class Category extends Model
     {
-        return $this->belongsToMany(Product::class);
+        /** @use HasFactory<CategoryFactory> */
+        use HasFactory;
 
+        protected $fillable = ['name', 'slug', 'is_active'];
+
+        public function products(): BelongsToMany
+        {
+            return $this->belongsToMany(Product::class);
+
+        }
     }
-}
