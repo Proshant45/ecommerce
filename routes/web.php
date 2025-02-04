@@ -20,6 +20,10 @@
     Route::get('admin/product_upload', [ProductController::class, 'create'])->name('product.create');
     Route::post('admin/product_upload', [ProductController::class, 'store'])->name('product.store');
     Route::post('shop/{slug}', [CategoryController::class, 'show'])->name('shop.show');
+    Route::get('admin/dashboard'
+    , function () {
+        return view('backend.admin.dashboard');
+    })->name('admin.dashboard');
 
     Route::get('/dashboard', function () {
         return view('dashboard');
