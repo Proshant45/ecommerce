@@ -1,5 +1,6 @@
 <x-frontend.layout>
     <!-- product-area start -->
+
     <div class="product-area pt-100">
         <div class="container">
             <div class="row">
@@ -42,7 +43,6 @@
                                     <div class="product-content">
                                         <h3><a href="shop/{{$product->slug}}">{{$product->name}}</a></h3>
                                         <p class="pull-left">{{$product->price}}
-
                                         </p>
                                         <ul class="pull-right d-flex">
                                             <li><i class="fa fa-star"></i></li>
@@ -59,10 +59,14 @@
                     </ul>
                     {{ $products->links() }}
                 </div>
+
                 @foreach($categories as $category)
                     <div class="tab-pane" id="{{$category->slug}}">
                         <div class="row">
-                            @foreach($category->products as $product)
+                            @php
+                                $category_product = $category->products()->paginate(8);
+                            @endphp
+                            @foreach($category_product as $product)
                                 <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
                                     <div class="product-wrap">
                                         <div class="product-img">
@@ -93,16 +97,14 @@
                                 </li>
 
                             @endforeach
+                            {{ $category_product->links( ) }}
                         </div>
+                    </div>
                 @endforeach
 
             </div>
          </div>
         </div>
     </div>
-    </div>
-    </div>
-    <!-- product-area end -->
-
     <x-frontend.news-letter/>
 </x-frontend.layout>

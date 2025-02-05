@@ -14,7 +14,7 @@
     {{--    best seller products area --}}
     <x-frontend.best_seller></x-frontend.best_seller>
     <!-- product-area end -->
-    <x-frontend.latest_product>
+    <x-frontend.latest_product :latest_products="$latest_products">
 
     </x-frontend.latest_product>
     <!-- product-area end -->

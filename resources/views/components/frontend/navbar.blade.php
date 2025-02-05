@@ -18,7 +18,6 @@
     </div>
 </div>
 
-
 <!-- header-area start -->
 <header class="header-area">
     <div class="header-top bg-2">
@@ -51,8 +50,6 @@
                                 @endif
                                     <li><a href="{{url('/cart')}}">Cart</a></li>
                                     <li><a href="{{url('/checkout')}}">Checkout</a></li>
-
-
                             </ul>
                         </li>
                         <li>
@@ -103,17 +100,7 @@
                                     <li><a href="wishlist.html">Wishlist</a></li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href="javascript:void(0);">Pages <i class="fa fa-angle-down"></i></a>
-                                <ul class="dropdown_style">
-                                    <li><a href="/about">About Page</a></li>
-                                    <li><a href="single-product.html">Product Details</a></li>
-                                    <li><a href="cart.html">Shopping cart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                    <li><a href="wishlist.html">Wishlist</a></li>
-                                    <li><a href="faq.html">FAQ</a></li>
-                                </ul>
-                            </li>
+                            
                             <li>
                                 <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown_style">

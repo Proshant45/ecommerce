@@ -1,27 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Product;
+
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class InvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {   $latest_products = Product::orderBy('created_at', 'desc')->take(16)->get();
-        return view('frontend.index', ['latest_products' => $latest_products]);
+    {
+        //
     }
 
-    public function about()
-    {
-        return view('frontend.about');
-    }
-    public function contact()
-    {
-        return view('frontend.contact');
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -41,7 +34,7 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Invoice $invoice)
     {
         //
     }
@@ -49,7 +42,7 @@ class HomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Invoice $invoice)
     {
         //
     }
@@ -57,7 +50,7 @@ class HomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Invoice $invoice)
     {
         //
     }
@@ -65,7 +58,7 @@ class HomeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Invoice $invoice)
     {
         //
     }
