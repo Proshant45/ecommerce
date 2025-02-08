@@ -38,8 +38,13 @@
 
                 </select>
             </div>
+            <div class="featured">
+                <label>Select Featured Image :</label>
+                <input type="file" name="featured_image">
+            </div>
             <label>Select Images:</label>
             <input type="file" name="images[]" multiple>
+
             <button type="submit">Upload Product</button>
             @if (session('success'))
                 <p>{{ session('success') }}</p>

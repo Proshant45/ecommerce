@@ -3,13 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckOutController extends Controller
 {
-
-    public function create()
+    public function create(Request $request)
     {
-        return view('frontend.checkout');
+        if (Auth::user()) {
+            $cart = Auth::user()->cart;
+            $cart_items = $cart->items;
+
+
+        } else {
+            $cart_items = [];
+        }
+
+        return view('frontend.checkout', ['cart_items' => $cart_items]);
+
     }
 
     /**

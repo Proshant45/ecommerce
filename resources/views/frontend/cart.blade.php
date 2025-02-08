@@ -1,9 +1,11 @@
 <x-frontend.layout>
+
     <div class="cart-area ptb-100">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="cart/update/" method="post">
+                    <form action="/cart" method="post" >
+                        @csrf
                         <table class="table-responsive cart-wrap">
                             <thead>
                                 <tr>
@@ -16,36 +18,33 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                    @php
+                                    $sum = 0;
+                                    @endphp
+                            @foreach($cart_items as $item)
+                                    @php
+                                    $price = $item->product->price;
+                                    $total = $item->quantity * $price;
+                                    $sum += $total;
+
+                                    @endphp
                                 <tr>
                                     <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
-                                    <td class="product"><a href="single-product.html">Neture Honey</a></td>
-                                    <td class="ptice">$139.00</td>
+
+                                    <td class="product"><a href="single-product.html">{{$item->product->name}}</a></td>
+
+                                    <td class="ptice">{{$price}}</td>
                                     <td class="quantity cart-plus-minus">
-                                        <input type="text" value="1" />
+                                        <input type="hidden" name="new_quantity[]" />
+                                        <input type="text" name="quantity" value="{{$item->quantity}}" />
                                     </td>
-                                    <td class="total">$139.00</td>
-                                    <td class="remove"><i class="fa fa-times"></i></td>
+                                    <td class="total">{{$total}} TK </td>
+                                    <td class="remove"><i class="fa fa-times">
+                                        <a href="/cart/delete/{{$item->id}}">Remove</a>
+                                        </i></td>
                                 </tr>
-                                <tr>
-                                    <td class="images"><img src="{{asset('assets')}}/images/cart/2.jpg" alt=""></td>
-                                    <td class="product"><a href="single-product.html">Pure Olive Oil</a></td>
-                                    <td class="ptice">$684.47</td>
-                                    <td class="quantity cart-plus-minus">
-                                        <input type="text" value="1" />
-                                    </td>
-                                    <td class="total">$684.47</td>
-                                    <td class="remove"><i class="fa fa-times"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="images"><img src="{{asset('assets')}}/images/cart/3.jpg" alt=""></td>
-                                    <td class="product"><a href="single-product.html">Pure Coconut Oil</a></td>
-                                    <td class="ptice">$145.80</td>
-                                    <td class="quantity cart-plus-minus">
-                                        <input type="text" value="1" />
-                                    </td>
-                                    <td class="total">$145.80</td>
-                                    <td class="remove"><i class="fa fa-times"></i></td>
-                                </tr>
+                            @endforeach
+
                             </tbody>
                         </table>
                         <div class="row mt-60">
@@ -53,15 +52,15 @@
                                 <div class="cartcupon-wrap">
                                     <ul class="d-flex">
                                         <li>
-                                            <button>Update Cart</button>
+                                            <button type="submit" formaction="{{url("/cart/update")}}">Update Cart</button>
                                         </li>
-                                        <li><a href="shop.html">Continue Shopping</a></li>
+                                        <li><a href="/shop">Continue Shopping</a></li>
                                     </ul>
                                     <h3>Cupon</h3>
                                     <p>Enter Your Cupon Code if You Have One</p>
                                     <div class="cupon-wrap">
-                                        <input type="text" placeholder="Cupon Code">
-                                        <button>Apply Cupon</button>
+                                        <input name="cupon_code" type="text" placeholder="Cupon Code">
+                                        <button type="submit" formaction="{{url("/cart/coupon")}}">Apply Cupon </button>
                                     </div>
                                 </div>
                             </div>
@@ -69,8 +68,8 @@
                                 <div class="cart-total text-right">
                                     <h3>Cart Totals</h3>
                                     <ul>
-                                        <li><span class="pull-left">Subtotal </span>$380.00</li>
-                                        <li><span class="pull-left"> Total </span> $380.00</li>
+                                        <li><span class="pull-left">Subtotal </span>{{$sum}} Taka</li>
+                                        <li><span class="pull-left"> Total </span>{{$sum}} Taka</li>
                                     </ul>
                                     <a href="/checkout">Proceed to Checkout</a>
                                 </div>

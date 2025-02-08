@@ -47,6 +47,7 @@ class ProductController extends Controller
         $attributes['slug'] = Str::slug($attributes['name'], '-');
 
         $images = $request->file('images');
+        $featured_image = $request->file('featured_image');
         $category = Category::find($attributes['category_id']);
         $product =Product::create([
             'name' => $attributes['name'],
@@ -56,7 +57,7 @@ class ProductController extends Controller
         ]);
         $product->category($category->id);
 
-
+//Incomplete - Add the featured image to the product
         $manager = new ImageManager(new Driver());
         foreach ($images as $image) {
             $img = $manager->read($image->getRealPath());

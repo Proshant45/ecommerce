@@ -18,12 +18,15 @@
 
                         </div>
                         <div class="product-thumbnil-active  owl-carousel">
+                            @if( $product->images->count() > 0)
                             @foreach($product->images as $image)
                                 <div class="item">
                                     <img src="{{asset("storage/".$image->path)}}" alt="">
                                 </div>
 
                             @endforeach
+
+                            @endif
 
 
                         </div>
@@ -46,11 +49,14 @@
                         <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled
                             and demoralized by the charms of pleasure of the moment, so blinded by desire, that they
                             cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs</p>
-                        <ul class="input-style">
+                        <ul class="input-style " >
+                            <form action="/cart/{{$product->id}}" method="post">
+                            @csrf
                             <li class="quantity cart-plus-minus">
-                                <input type="text" value="1"/>
+                                <input  type="text" name="quantity" value="1"/>
                             </li>
-                            <li><a href="cart.html">Add to Cart</a></li>
+                            <li><button type="submit">Add to Cart</button></li>
+                            </form>
                         </ul>
                         <ul class="cetagory">
                             <li>Categories:</li>

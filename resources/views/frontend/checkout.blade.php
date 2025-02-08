@@ -1,5 +1,4 @@
 <x-frontend.layout>
-
     <div class="checkout-area ptb-100">
         <div class="container">
             <div class="row">
@@ -124,12 +123,23 @@
                     <div class="order-area">
                         <h3>Your Order</h3>
                         <ul class="total-cost">
-                            <li>Pure Nature Honey <span class="pull-right">$139.00</span></li>
-                            <li>Your Product Name <span class="pull-right">$100.00</span></li>
-                            <li>Pure Nature Honey <span class="pull-right">$141.00</span></li>
-                            <li>Subtotal <span class="pull-right"><strong>$380.00</strong></span></li>
+                            @php
+                                $sub_total = 0;
+                            @endphp
+                            @foreach($cart_items as $item)
+
+                                @php
+                                    $product = $item->product;
+                                    $total_price = $product->price * $item->quantity;
+                                    $sub_total += $total_price
+
+                                        @endphp
+                                <li>{{$item->product->name}} <span class="pull-right">{{$item->quantity}} x {{$product->price}} = {{ $total_price}} </span></li>
+                            @endforeach
+
+                            <li>Subtotal <span class="pull-right"><strong>{{$sub_total}}</strong></span></li>
                             <li>Shipping <span class="pull-right">Free</span></li>
-                            <li>Total<span class="pull-right">$380.00</span></li>
+                            <li>Total<span class="pull-right">{{$sub_total}}</span></li>
                         </ul>
                         <ul class="payment-method">
                             <li>
@@ -149,7 +159,7 @@
                                 <label for="delivery">Cash on Delivery</label>
                             </li>
                         </ul>
-                        <button>Place Order</button>
+                        <button >Place Order</button>
                     </div>
                 </div>
             </div>
