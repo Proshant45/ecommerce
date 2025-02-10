@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\CartItem;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -44,6 +45,17 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+       // transferring CartItems To User's Cart
+        auth()->user()->cart()->create();
+        if (session()->has('cart_items')) {
+            foreach (session()->get('cart_items') as $item) {
+                $cartItem = new CartItem;
+                $cartItem->product_id = $item['product_id'];
+                $cartItem->quantity = $item['quantity'];
+                $cartItem->cart_id = $user->cart->id;
+                $cartItem->save();
+            }
+        }
 
         return redirect(route('dashboard', absolute: false));
     }

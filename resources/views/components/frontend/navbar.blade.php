@@ -1,3 +1,6 @@
+@php
+    $guest_cart_item = guestCart();
+@endphp
 <div class="preloader-wrap">
     <div class="spinner"></div>
 </div>
@@ -38,7 +41,6 @@
                                 @else
                                     My Account
                                 @endif
-
                                 <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown_style">
                                 @if(auth()->check())
@@ -53,6 +55,7 @@
                             </ul>
                         </li>
                         <li>
+
                             @if (Route::has('login'))
                                     @auth
                                         <a href="{{ url('/logout') }} " class="py-1">
@@ -80,7 +83,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-7 col-sm-6 col-6">
                     <div class="logo">
-                        <a href="">
+                        <a href=" {{url('/')}} ">
                             <img src="{{asset('assets')}}/images/logo.png" alt="">
                         </a>
                     </div>
@@ -112,34 +115,75 @@
                     <ul class="search-cart-wrapper d-flex">
                         <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                         <li>
-                            <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>2</span></a>
+                            @if(auth()->check())
+                            <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
+                                    {{auth()->user()->cart->totalQuantity()}}
+                                </span></a>
+                                @else
+                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
+
+                                    {{count($guest_cart_item)}}
+                                </span></a>
+                            @endif
+
                             <ul class="cart-wrap dropdown_style">
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{asset('assets')}}/images/cart/1.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                @php
+                                    $total = 0;
+                                @endphp
+                                @if(!auth()->check() && count($guest_cart_item) > 0)
+
+                                    @foreach($guest_cart_item as $item)
+                                        <li class="cart-items">
+
+                                            <div class="cart-img">
+                                                <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
+                                            </div>
+                                            <div class="cart-content">
+                                                <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
+                                                <span>QTY : {{$item['quantity']}}TK</span>
+                                                <p>{{$item->product->price}}</p>
+                                            </div>
+                                        </li>
+                                        @php
+                                            $total += $item['quantity']* $item->product->price;
+                                        @endphp
+                                    @endforeach
+
+                                    <li>Subtotol: <span class="pull-right">${{$total}}</span></li>
+                                    <li>
+                                        <button>Check Out</button>
+                                    </li>
+                                @endif
+
+                                @if(auth()->check())
+                                        @php
+                                            $cart_items = auth()->user()->cart->items;
+                                            $total = 0;
+                                        @endphp
+                                        @foreach($cart_items as $item)
+                                            <li class="cart-items">
+                                                <div class="cart-img">
+                                                    <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
+                                                </div>
+
+                                                <div class="cart-content">
+                                                    <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
+                                                    <span>QTY : {{$item->quantity}}</span>
+                                                    <p>{{$item->product->price}} TK</p>
+                                                    <i class="fa fa-times"></i>
+                                                </div>
+                                            </li>
+                                            @php
+
+                                                $total += $item->quantity * $item->product->price;
+                                            @endphp
+                                        @endforeach
+
+                                <li>Subtotol: <span class="pull-right">{{$total}} TK</span></li>
                                 <li>
                                     <button>Check Out</button>
                                 </li>
+                                    @endif
                             </ul>
                         </li>
                         <li>
@@ -233,7 +277,7 @@
                                     <li><a href="blog-details.html">Blog Details</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{url("contact")}}">Contact</a></li>
+                            <li><a href="{{url('contact')}}">Contact</a></li>
                         </ul>
                     </div>
                 </div>

@@ -332,7 +332,6 @@
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
         if ($button.text() == "+") {
-            console.log(oldValue)
             var newVal = parseFloat(oldValue) + 1;
         } else {
             // Don't allow decrementing below zero

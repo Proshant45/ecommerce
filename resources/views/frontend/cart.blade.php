@@ -1,5 +1,4 @@
 <x-frontend.layout>
-
     <div class="cart-area ptb-100">
         <div class="container">
             <div class="row">
@@ -21,29 +20,57 @@
                                     @php
                                     $sum = 0;
                                     @endphp
-                            @foreach($cart_items as $item)
-                                    @php
-                                    $price = $item->product->price;
-                                    $total = $item->quantity * $price;
-                                    $sum += $total;
+                                    @if(session('cart_items'))
+                                        @php
+                                        $cart_items = session('cart_items');
+                                        @endphp
+                                        @foreach($cart_items as $item)
+                                            @php
 
-                                    @endphp
-                                <tr>
-                                    <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
+                                                $total = $item['price'] * $item['quantity'];
+                                                $sum += $total;
 
-                                    <td class="product"><a href="single-product.html">{{$item->product->name}}</a></td>
+                                            @endphp
+                                            <tr>
+                                                <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
 
-                                    <td class="ptice">{{$price}}</td>
-                                    <td class="quantity cart-plus-minus">
-                                        <input type="hidden" name="new_quantity[]" />
-                                        <input type="text" name="quantity" value="{{$item->quantity}}" />
-                                    </td>
-                                    <td class="total">{{$total}} TK </td>
-                                    <td class="remove"><i class="fa fa-times">
-                                        <a href="/cart/delete/{{$item->id}}">Remove</a>
-                                        </i></td>
-                                </tr>
-                            @endforeach
+                                                <td class="product"><a href="single-product.html">{{$item['name']}} </a></td>
+
+                                                <td class="ptice">{{$item['price']}}</td>
+                                                <td class="quantity cart-plus-minus">
+                                                    <input type="hidden" name="new_quantity[]" />
+                                                    <input type="text" name="quantity" value="{{$item['quantity']}}" />
+                                                </td>
+                                                <td class="total">{{$total}} TK </td>
+                                                <td class="remove"><i class="fa fa-times">
+                                                        <a href="/cart/delete/{{$item['product_id']}}">Remove</a>
+                                                    </i></td>
+                                            </tr>
+                                        @endforeach
+                                    @elseif(Auth::check())
+                                        @foreach($cart_items as $item)
+                                            @php
+                                                $price = $item->product->price;
+                                                $total = $item->quantity * $price;
+                                                $sum += $total;
+                                           @endphp
+                                            <tr>
+                                                <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
+
+                                                <td class="product"><a href="single-product.html">{{$item->product->name}}</a></td>
+
+                                                <td class="ptice">{{$price}}</td>
+                                                <td class="quantity cart-plus-minus">
+                                                    <input type="hidden" name="new_quantity[]" />
+                                                    <input type="text" name="quantity" value="{{$item->quantity}}" />
+                                                </td>
+                                                <td class="total">{{$total}} TK </td>
+                                                <td class="remove"><i class="fa fa-times">
+                                                    <a href="/cart/delete/{{$item->id}}">Remove</a>
+                                                    </i></td>
+                                            </tr>
+                                          @endforeach
+                                   @endif
 
                             </tbody>
                         </table>

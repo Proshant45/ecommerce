@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Image as ImageModel;
@@ -7,8 +8,9 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
+
 class ProductController extends Controller
 {
     /**
@@ -49,7 +51,7 @@ class ProductController extends Controller
         $images = $request->file('images');
         $featured_image = $request->file('featured_image');
         $category = Category::find($attributes['category_id']);
-        $product =Product::create([
+        $product = Product::create([
             'name' => $attributes['name'],
             'description' => $attributes['description'],
             'price' => $attributes['price'],
@@ -57,13 +59,13 @@ class ProductController extends Controller
         ]);
         $product->category($category->id);
 
-//Incomplete - Add the featured image to the product
-        $manager = new ImageManager(new Driver());
+        // Incomplete - Add the featured image to the product
+        $manager = new ImageManager(new Driver);
         foreach ($images as $image) {
             $img = $manager->read($image->getRealPath());
             $img->toWebp();
             $filename = uniqid('product_').'.webp';
-            Storage::disk('public')->put( 'uploads/'.$filename, $img->encode());
+            Storage::disk('public')->put('uploads/'.$filename, $img->encode());
 
             $imageData = new ImageModel;
             $imageData->path = 'uploads/'.$filename;

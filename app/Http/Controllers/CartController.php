@@ -10,15 +10,44 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public static function sessionCart()
+    {
+        if (! Auth::check()) {
+            $cartItems = collect(session()->get('cart_items', []));
+            $cart_items = $cartItems->map(function ($item) {
+                $cartItem = new CartItem;
+                $cartItem->product = Product::find($item['product_id']);
+                $cartItem->quantity = $item['quantity'];
+
+                return $cartItem;
+
+            });
+
+            return $cart_items;
+        }
+    }
+
     public function cart()
     {
-        if (Auth::user()) {
-            $cart_items = Auth::user()->cart->items;
+        if (! Auth::check()) {
+
+            $cartItems = collect(session()->get('cart_items', []));
+            $cart_items = $cartItems->map(function ($item) {
+                $cartItem = new CartItem;
+                $cartItem->product = Product::find($item['product_id']);
+                $cartItem->quantity = $item['quantity'];
+
+                return $cartItem;
+            });
+
+            return view('frontend.cart', ['cart_items' => $cart_items]);
         }
-        else
-        {
-            $cart_items = [];
-        }
+
+        $cart = Cart::firstOrCreate([
+            'user_id' => Auth::id(),
+        ]);
+
+        $cart_items = $cart->items;
 
         return view('frontend.cart', ['cart_items' => $cart_items]);
     }
@@ -32,18 +61,38 @@ class CartController extends Controller
 
     public function addToCart(Request $request, $id)
     {
+        $product = Product::findOrFail($id);
+        $quantity = $request->quantity ?? 1;
+
+        if (! Auth::check()) {
+            $cartItems = session()->get('cart_items', []);
+
+            if (isset($cartItems[$id])) {
+                $cartItems[$id]['quantity'] += $quantity;
+            } else {
+                $cartItems[$id] = [
+                    'name' => $product->name,
+                    'product_id' => $id,
+                    'quantity' => $quantity,
+                    'price' => $product->price,
+                ];
+            }
+
+            session()->put('cart_items', $cartItems);
+
+            return redirect()->back()->with('success', 'Product added to cart');
+        }
+
         $cart = Cart::firstOrCreate([
             'user_id' => Auth::id(),
         ]);
-        $product = Product::findOrFail($id);
-        $quantity = $request->quantity;
 
         $cartItem = $cart->items()->where('product_id', $id)->first();
 
         if ($cartItem) {
             $cartItem->quantity += $quantity;
+            $cartItem->save();
         } else {
-
             $cartItem = new CartItem([
                 'product_id' => $id,
                 'quantity' => $quantity,
@@ -51,15 +100,7 @@ class CartController extends Controller
             $cart->items()->save($cartItem);
         }
 
-        return redirect()->back()->with('success', 'Product added to cart!');
-
-        $cartItem = new CartItem();
-        $cartItem->product_id = $id;
-        $cartItem->quantity = $request->quantity;
-        $cartItem->cart_id = $cart->id;
-        $cartItem->save();
-
-        return redirect()->back()->with('Product added to cart');
+        return redirect()->back()->with('success', 'Product added to cart');
     }
 
     public function updateCart(Request $request)
@@ -73,13 +114,23 @@ class CartController extends Controller
     {
         dd($request->all());
 
-
         return redirect()->back()->with('success', 'Coupon applied');
 
     }
 
     public function removeFromCart($id)
-    {   CartItem::where('id', $id)->delete();
+    {
+        if (! Auth::check()) {
+            $cartItems = collect(session()->get('cart_items', []));
+            foreach ($cartItems as $key => $item) {
+                if ($key == $id) {
+                    $cartItems->forget($key);
+                }
+            }
+        }
+
+        CartItem::where('id', $id)->delete();
+
         return redirect()->back()->with('success', 'Product removed from cart');
     }
 }
