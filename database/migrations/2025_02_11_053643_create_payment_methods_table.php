@@ -1,6 +1,5 @@
 <?php
 
-    use App\Models\Product;
     use Illuminate\Database\Migrations\Migration;
     use Illuminate\Database\Schema\Blueprint;
     use Illuminate\Support\Facades\Schema;
@@ -11,12 +10,14 @@
          */
         public function up(): void
         {
-            Schema::create('images', function (Blueprint $table) {
+            Schema::create('payment_methods', function (Blueprint $table) {
                 $table->id();
-                $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
                 $table->string('name');
-                $table->string('path');
-                $table->boolean('is_main')->default(false);
+                $table->string('type');
+                $table->string('description');
+                $table->string('logo');
+                $table->boolean('is_active')->default(true);
+                $table->boolean('is_default')->default(false);
                 $table->timestamps();
             });
         }
@@ -26,6 +27,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('images');
+            Schema::dropIfExists('payment_methods');
         }
     };

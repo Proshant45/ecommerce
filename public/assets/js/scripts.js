@@ -1,30 +1,30 @@
-(function($) {
+(function ($) {
     "use strict";
 
     // filter-click
-    $('.filter-menu a').on("click", function() {
+    $('.filter-menu a').on("click", function () {
         $('.filter-active').slideToggle();
     })
 
     // toggle
-    $('#toggle1').on("click", function() {
+    $('#toggle1').on("click", function () {
         $('.create-account').slideToggle();
     })
     // toggle
-    $('#toggle2').on("click", function() {
+    $('#toggle2').on("click", function () {
         $('#open2').slideToggle();
     })
 
     // sidebarmenu click
-    $(".search-tigger a").on("click", function() {
+    $(".search-tigger a").on("click", function () {
         $(".search-area").addClass("current");
     });
-    $(".closebar").on("click", function() {
+    $(".closebar").on("click", function () {
         $(".search-area").removeClass("current");
     });
 
     // responsive-menu tigger
-    $(".responsive-menu-tigger").on("click", function() {
+    $(".responsive-menu-tigger").on("click", function () {
         $(".responsive-menu-area").toggleClass("active");
     });
 
@@ -53,7 +53,7 @@
             el: '.swiper-pagination',
         },
         on: {
-            progress: function() {
+            progress: function () {
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     var slideProgress = swiper.slides[i].progress;
@@ -63,13 +63,13 @@
                         "translate3d(" + innerTranslate + "px, 0, 0)";
                 }
             },
-            touchStart: function() {
+            touchStart: function () {
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     swiper.slides[i].style.transition = "";
                 }
             },
-            setTransition: function(speed) {
+            setTransition: function (speed) {
                 var swiper = this;
                 for (var i = 0; i < swiper.slides.length; i++) {
                     swiper.slides[i].style.transition = speed + "ms";
@@ -83,7 +83,7 @@
     var swiper = new Swiper(".swiper-container", swiperOptions);
 
     // masonry effect
-    $('.grid').imagesLoaded(function() {
+    $('.grid').imagesLoaded(function () {
         var $grid = $('.grid').isotope({
             itemSelector: '.items',
             percentPosition: true,
@@ -109,7 +109,7 @@
                     nav: false,
                     dots: false
                 })
-                .on('changed.owl.carousel', function(e) {
+                .on('changed.owl.carousel', function (e) {
                     if (!flag) {
                         flag = true;
                         $sync2.trigger('to.owl.carousel', [e.item.index, duration, true]);
@@ -149,11 +149,11 @@
                         }
                     },
                 })
-                .on('click', '.owl-item', function() {
+                .on('click', '.owl-item', function () {
                     $sync1.trigger('to.owl.carousel', [$(this).index(), duration, true]);
 
                 })
-                .on('changed.owl.carousel', function(e) {
+                .on('changed.owl.carousel', function (e) {
                     if (!flag) {
                         flag = true;
                         $sync1.trigger('to.owl.carousel', [e.item.index, duration, true]);
@@ -161,7 +161,8 @@
                     }
                 });
 
-        };
+        }
+        ;
     }
 
     productGallary();
@@ -254,7 +255,7 @@
 
 
     // // stickey menu
-    $(window).on('scroll', function() {
+    $(window).on('scroll', function () {
         var scroll = $(window).scrollTop(),
             mainHeader = $('#sticky-header'),
             mainHeaderHeight = mainHeader.innerHeight();
@@ -290,7 +291,7 @@
         min: 12,
         max: 200,
         values: [0, 100],
-        slide: function(event, ui) {
+        slide: function (event, ui) {
             $("#amount").val("$" + ui.values[0] + " - $" + ui.values[1]);
         }
     });
@@ -313,7 +314,7 @@
         button1.show();
     }
     list1.slice(0, numToShow1).show();
-    button1.on('click', function() {
+    button1.on('click', function () {
         var showing1 = list1.filter(':visible').length;
         list1.slice(showing1 - 1, showing1 + numToShow1).fadeIn();
         var nowShowing1 = list1.filter(':visible').length;
@@ -323,12 +324,11 @@
     });
 
 
-
     /*-----------------------
        cart-plus-minus-button
      -------------------------*/
     $(".cart-plus-minus").append('<div class="dec qtybutton">-</div><div class="inc qtybutton">+</div>');
-    $(".qtybutton").on("click", function() {
+    $(".qtybutton").on("click", function () {
         var $button = $(this);
         var oldValue = $button.parent().find("input").val();
         if ($button.text() == "+") {
@@ -341,14 +341,13 @@
                 newVal = 0;
             }
         }
-        console.log(newVal)
         $button.parent().find("input").val(newVal);
     });
     /*====================================================
                     load-function
     ====================================================*/
 
-    $(window).on('load', function() {
+    $(window).on('load', function () {
         /*-- preloader ---*/
         $('.preloader-wrap').fadeOut();
         /*-- Two Col EqHeight---*/
@@ -359,8 +358,7 @@
     });
 
 
-
-    $(window).on("scroll", function() {
+    $(window).on("scroll", function () {
         /*-- preloader ---*/
         $('.preloader-wrap').fadeOut();
         productGallary();
@@ -371,7 +369,7 @@
     ------------------------------- */
     $('#mc-form').ajaxChimp({
         url: 'http://www.wpocean.us13.list-manage.com/subscribe/post?u=e9d729be03847d1a66b143bd2&amp;id=21ac2a3302', //Set Your Mailchamp URL
-        callback: function(resp) {
+        callback: function (resp) {
             if (resp.result === 'success') {
                 $('.sform input, .sform .subscribe-btn').fadeOut();
             }
@@ -383,7 +381,7 @@
     --------------------- */
 
     $('.cf-msg').hide();
-    $('form#cf button#submit').on('click', function() {
+    $('form#cf button#submit').on('click', function () {
         var fname = $('#fname').val();
         var subject = $('#subject').val();
         var email = $('#email').val();
@@ -406,14 +404,14 @@
                 type: "POST",
                 url: "mail.php",
                 data: values,
-                success: function() {
+                success: function () {
                     $('#fname').val('');
                     $('#subject').val('');
                     $('#email').val('');
                     $('#msg').val('');
 
                     $('.cf-msg').fadeIn().html('<div class="alert alert-success"><strong>Success!</strong> Email has been sent successfully.</div>');
-                    setTimeout(function() {
+                    setTimeout(function () {
                         $('.cf-msg').fadeOut('slow');
                     }, 4000);
                 }
@@ -428,7 +426,7 @@
         = COUNTDOWN CLOCK
 -------------------------------------------*/
     if ($("#clock").length) {
-        $('#clock').countdown('2020/12/25', function(event) {
+        $('#clock').countdown('2020/12/25', function (event) {
             var $this = $(this).html(event.strftime('' +
                 '<div class="box"><div>%m</div> <span>month</span> </div>' +
                 '<div class="box"><div>%D</div> <span>Days</span> </div>' +

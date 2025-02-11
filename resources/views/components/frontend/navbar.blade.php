@@ -44,33 +44,38 @@
                                 <i class="fa fa-angle-down"></i></a>
                             <ul class="dropdown_style">
                                 @if(auth()->check())
+                                    @if(url()->current() != url('/profile'))
+                                        <li><a href="{{url('/profile')}}">Profile</a></li>
+                                    @endif
+                                    <li><a href="{{url('/setting')}}">Settings</a></li>
+                                    <li><a href="{{url('/orders')}}">Order</a></li>
                                     <li><a href="{{url('/wishlist')}}">Wishlist</a></li>
-                                   <li> <a href="{{ url('/logout') }}">Log out</a> </li>
+                                    <li><a href="{{ url('/logout') }}">Log out</a></li>
                                 @else
                                     <li><a href="{{url('/login')}}" class="text-danger">Login</a></li>
                                     <li><a href="{{url('/register')}}">Register</a></li>
                                 @endif
-                                    <li><a href="{{url('/cart')}}">Cart</a></li>
-                                    <li><a href="{{url('/checkout')}}">Checkout</a></li>
+                                <li><a href="{{url('/cart')}}">Cart</a></li>
+                                <li><a href="{{url('/checkout')}}">Checkout</a></li>
                             </ul>
                         </li>
                         <li>
 
                             @if (Route::has('login'))
-                                    @auth
-                                        <a href="{{ url('/logout') }} " class="py-1">
-                                            Log out
-                                        </a>
-                                    @else
-                                        <div class=" d-flex">
-                                            <a class=" px-3 " href="{{ route('login') }} "> Log in </a>
+                                @auth
+                                    <a href="{{ url('/logout') }} " class="py-1">
+                                        Log out
+                                    </a>
+                                @else
+                                    <div class=" d-flex">
+                                        <a class=" px-3 " href="{{ route('login') }} "> Log in </a>
 
-                                             @if (Route::has('register'))
-                                              <a href="{{ route('register') }}">Register</a>
-                                            @endif
-                                        </div>
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}">Register</a>
+                                        @endif
+                                    </div>
 
-                                    @endauth
+                                @endauth
                             @endif
                         </li>
                     </ul>
@@ -99,7 +104,7 @@
                                     <li><a href="/shop">Shop Page</a></li>
                                 </ul>
                             </li>
-                            
+
                             <li>
                                 <a href="javascript:void(0);">Blog <i class="fa fa-angle-down"></i></a>
                                 <ul class="dropdown_style">
@@ -116,10 +121,10 @@
                         <li class="search-tigger"><a href="javascript:void(0);"><i class="flaticon-search"></i></a></li>
                         <li>
                             @if(auth()->check())
-                            <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
+                                <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
                                     {{auth()->user()->cart->totalQuantity()}}
                                 </span></a>
-                                @else
+                            @else
                                 <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
 
                                     {{count($guest_cart_item)}}
@@ -156,34 +161,34 @@
                                 @endif
 
                                 @if(auth()->check())
+                                    @php
+                                        $cart_items = auth()->user()->cart->items;
+                                        $total = 0;
+                                    @endphp
+                                    @foreach($cart_items as $item)
+                                        <li class="cart-items">
+                                            <div class="cart-img">
+                                                <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
+                                            </div>
+
+                                            <div class="cart-content">
+                                                <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
+                                                <span>QTY : {{$item->quantity}}</span>
+                                                <p>{{$item->product->price}} TK</p>
+                                                <i class="fa fa-times"></i>
+                                            </div>
+                                        </li>
                                         @php
-                                            $cart_items = auth()->user()->cart->items;
-                                            $total = 0;
+
+                                            $total += $item->quantity * $item->product->price;
                                         @endphp
-                                        @foreach($cart_items as $item)
-                                            <li class="cart-items">
-                                                <div class="cart-img">
-                                                    <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
-                                                </div>
+                                    @endforeach
 
-                                                <div class="cart-content">
-                                                    <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
-                                                    <span>QTY : {{$item->quantity}}</span>
-                                                    <p>{{$item->product->price}} TK</p>
-                                                    <i class="fa fa-times"></i>
-                                                </div>
-                                            </li>
-                                            @php
-
-                                                $total += $item->quantity * $item->product->price;
-                                            @endphp
-                                        @endforeach
-
-                                <li>Subtotol: <span class="pull-right">{{$total}} TK</span></li>
-                                <li>
-                                    <button>Check Out</button>
-                                </li>
-                                    @endif
+                                    <li>Subtotol: <span class="pull-right">{{$total}} TK</span></li>
+                                    <li>
+                                        <button>Check Out</button>
+                                    </li>
+                                @endif
                             </ul>
                         </li>
                         <li>

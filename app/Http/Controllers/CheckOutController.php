@@ -1,64 +1,65 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
+    use Illuminate\Support\Facades\Session;
 
-class CheckOutController extends Controller
-{
-    public function create(Request $request)
+    class CheckOutController extends Controller
     {
-        if (Auth::user()) {
-            $cart = Auth::user()->cart;
-            $cart_items = $cart->items;
+        public function create(Request $request)
+        {
+            if (Auth::user()) {
+                $cart = Auth::user()->cart;
+                $cart_items = $cart->items;
 
+            } else {
+                Session::flash('message', 'Please register to checkout');
+                return view('auth.register');
+            }
 
-        } else {
-            $cart_items = [];
+            return view('frontend.checkout', ['cart_items' => $cart_items]);
+
         }
 
-        return view('frontend.checkout', ['cart_items' => $cart_items]);
+        /**
+         * Store a newly created resource in storage.
+         */
+        public function store(Request $request)
+        {
+            //
+        }
 
-    }
+        /**
+         * Display the specified resource.
+         */
+        public function show(string $id)
+        {
+            //
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        /**
+         * Show the form for editing the specified resource.
+         */
+        public function edit(string $id)
+        {
+            //
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        /**
+         * Update the specified resource in storage.
+         */
+        public function update(Request $request, string $id)
+        {
+            //
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        /**
+         * Remove the specified resource from storage.
+         */
+        public function destroy(string $id)
+        {
+            //
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-}

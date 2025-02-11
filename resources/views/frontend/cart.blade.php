@@ -3,74 +3,76 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form action="/cart" method="post" >
+                    <form action="/cart" method="post">
                         @csrf
                         <table class="table-responsive cart-wrap">
                             <thead>
-                                <tr>
-                                    <th class="images">Image</th>
-                                    <th class="product">Product</th>
-                                    <th class="ptice">Price</th>
-                                    <th class="quantity">Quantity</th>
-                                    <th class="total">Total</th>
-                                    <th class="remove">Remove</th>
-                                </tr>
+                            <tr>
+                                <th class="images">Image</th>
+                                <th class="product">Product</th>
+                                <th class="ptice">Price</th>
+                                <th class="quantity">Quantity</th>
+                                <th class="total">Total</th>
+                                <th class="remove">Remove</th>
+                            </tr>
                             </thead>
                             <tbody>
+                            @php
+                                $sum = 0;
+                            @endphp
+                            @if(session('cart_items'))
+                                @php
+                                    $cart_items = session('cart_items');
+                                @endphp
+                                @foreach($cart_items as $item)
                                     @php
-                                    $sum = 0;
+
+                                        $total = $item['price'] * $item['quantity'];
+                                        $sum += $total;
+
                                     @endphp
-                                    @if(session('cart_items'))
-                                        @php
-                                        $cart_items = session('cart_items');
-                                        @endphp
-                                        @foreach($cart_items as $item)
-                                            @php
+                                    <tr>
+                                        <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
 
-                                                $total = $item['price'] * $item['quantity'];
-                                                $sum += $total;
+                                        <td class="product"><a href="single-product.html">{{$item['name']}} </a></td>
 
-                                            @endphp
-                                            <tr>
-                                                <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
+                                        <td class="ptice">{{$item['price']}}</td>
+                                        <td class="quantity cart-plus-minus">
+                                            <input type="hidden" name="new_quantity[]"/>
+                                            <input type="text" name="quantity" value="{{$item['quantity']}}"/>
+                                        </td>
+                                        <td class="total">{{$total}} TK</td>
+                                        <td class="remove"><i class="fa fa-times">
+                                                <a href="/cart/delete/{{$item['product_id']}}">Remove</a>
+                                            </i></td>
+                                    </tr>
+                                @endforeach
+                            @elseif(Auth::check())
+                                @foreach($cart_items as $item)
+                                    @php
+                                        $price = $item->product->price;
+                                        $total = $item->quantity * $price;
+                                        $sum += $total;
+                                    @endphp
+                                    <tr>
+                                        <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
 
-                                                <td class="product"><a href="single-product.html">{{$item['name']}} </a></td>
+                                        <td class="product"><a href="single-product.html">{{$item->product->name}}</a>
+                                        </td>
 
-                                                <td class="ptice">{{$item['price']}}</td>
-                                                <td class="quantity cart-plus-minus">
-                                                    <input type="hidden" name="new_quantity[]" />
-                                                    <input type="text" name="quantity" value="{{$item['quantity']}}" />
-                                                </td>
-                                                <td class="total">{{$total}} TK </td>
-                                                <td class="remove"><i class="fa fa-times">
-                                                        <a href="/cart/delete/{{$item['product_id']}}">Remove</a>
-                                                    </i></td>
-                                            </tr>
-                                        @endforeach
-                                    @elseif(Auth::check())
-                                        @foreach($cart_items as $item)
-                                            @php
-                                                $price = $item->product->price;
-                                                $total = $item->quantity * $price;
-                                                $sum += $total;
-                                           @endphp
-                                            <tr>
-                                                <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
-
-                                                <td class="product"><a href="single-product.html">{{$item->product->name}}</a></td>
-
-                                                <td class="ptice">{{$price}}</td>
-                                                <td class="quantity cart-plus-minus">
-                                                    <input type="hidden" name="new_quantity[]" />
-                                                    <input type="text" name="quantity" value="{{$item->quantity}}" />
-                                                </td>
-                                                <td class="total">{{$total}} TK </td>
-                                                <td class="remove"><i class="fa fa-times">
-                                                    <a href="/cart/delete/{{$item->id}}">Remove</a>
-                                                    </i></td>
-                                            </tr>
-                                          @endforeach
-                                   @endif
+                                        <td class="ptice">{{$price}}</td>
+                                        <td class="quantity cart-plus-minus">
+                                            <input type="hidden" name="new_quantity[]"/>
+                                            <input type="text" name="quantity" min="1"
+                                                   value="1" value="{{$item->quantity}}"/>
+                                        </td>
+                                        <td class="total">{{$total}} TK</td>
+                                        <td class="remove"><i class="fa fa-times">
+                                                <a href="/cart/delete/{{$item->id}}">Remove</a>
+                                            </i></td>
+                                    </tr>
+                                @endforeach
+                            @endif
 
                             </tbody>
                         </table>
@@ -79,7 +81,8 @@
                                 <div class="cartcupon-wrap">
                                     <ul class="d-flex">
                                         <li>
-                                            <button type="submit" formaction="{{url("/cart/update")}}">Update Cart</button>
+                                            <button type="submit" formaction="{{url("/cart/update")}}">Update Cart
+                                            </button>
                                         </li>
                                         <li><a href="/shop">Continue Shopping</a></li>
                                     </ul>
@@ -87,7 +90,7 @@
                                     <p>Enter Your Cupon Code if You Have One</p>
                                     <div class="cupon-wrap">
                                         <input name="cupon_code" type="text" placeholder="Cupon Code">
-                                        <button type="submit" formaction="{{url("/cart/coupon")}}">Apply Cupon </button>
+                                        <button type="submit" formaction="{{url("/cart/coupon")}}">Apply Cupon</button>
                                     </div>
                                 </div>
                             </div>
