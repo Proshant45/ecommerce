@@ -12,10 +12,10 @@
         {
             Schema::create('reviews', function (Blueprint $table) {
                 $table->id();
-                $table->foreignId('product_id')->constrained()->cascadeOnDelete();
-                $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-                $table->text('comment')->nullable();
-                $table->integer('rating_value');
+                $table->foreignId('product_id')->nullable()->constrained()->cascadeOnDelete();
+                $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+                $table->text('review')->nullable();
+                $table->integer('rating');
                 $table->boolean('is_approved')->default(true);
                 $table->timestamps();
             });

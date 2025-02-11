@@ -1,42 +1,48 @@
 <?php
 
-namespace Database\Seeders;
+    namespace Database\Seeders;
 
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\Role;
-use App\Models\User;
-use Illuminate\Database\Seeder;
+    use App\Models\Category;
+    use App\Models\Faq;
+    use App\Models\Product;
+    use App\Models\Review;
+    use App\Models\Role;
+    use App\Models\User;
+    use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder
-{
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    class DatabaseSeeder extends Seeder
     {
-        $adminRole = Role::create(['name' => 'admin']);
-        $userRole = Role::create(['name' => 'user']);
+        /**
+         * Seed the application's database.
+         */
+        public function run(): void
+        {
+            $adminRole = Role::create(['name' => 'admin']);
+            $userRole = Role::create(['name' => 'user']);
 
 
-        $adminUser= User::factory()->create(
+            $adminUser = User::factory()->create(
                 [
-                'name' => 'Admin',
-                'email' => 'admin@test'
+                    'name' => 'Admin',
+                    'email' => 'admin@test'
                 ]
-        );
-        $adminUser->roles()->attach($adminRole);
+            );
+            $adminUser->roles()->attach($adminRole);
 
-        $user = User::factory()->create(
+            $user = User::factory()->create(
                 [
-                'name' => 'User',
-                'email' => 'user@test'
+                    'name' => 'User',
+                    'email' => 'user@test'
                 ]
-        );
-        $user->roles()->attach($userRole);
+            );
+            $user->roles()->attach($userRole);
+            $users = User::factory(10)->create();
 
-        $categories = Category::factory(3)->create();
-        Product::factory(100)->hasAttached($categories)->create();
+            $categories = Category::factory(3)->create();
+            $products = Product::factory(100)->hasAttached($categories)
+                ->has(Faq::factory(5))->create();
+            Review::factory()->recycle($users)->create();
 
+
+        }
     }
-}

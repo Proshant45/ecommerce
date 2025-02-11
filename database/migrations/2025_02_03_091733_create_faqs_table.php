@@ -13,7 +13,7 @@
         {
             Schema::create('faqs', function (Blueprint $table) {
                 $table->id();
-                $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+                $table->foreignIdFor(Product::class)->nullable()->constrained()->cascadeOnDelete();
                 $table->string('question');
                 $table->text('answer');
                 $table->timestamps();

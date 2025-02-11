@@ -1,12 +1,19 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
 
-class Faq extends Model
-{
-    /** @use HasFactory<\Database\Factories\FaqFactory> */
-    use HasFactory;
-}
+    class Faq extends Model
+    {
+        /** @use HasFactory<\Database\Factories\FaqFactory> */
+        use HasFactory;
+
+        protected $fillable = ['question', 'answer'];
+
+        public function products()
+        {
+            return $this->belongsToMany(Product::class);
+        }
+    }

@@ -1,65 +1,65 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\Reviews;
-use Illuminate\Http\Request;
+    use App\Models\Review;
+    use Illuminate\Http\Request;
 
-class ReviewsController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    class ReviewsController extends Controller
     {
-        //
-    }
+        /**
+         * Display a listing of the resource.
+         */
+        public function index()
+        {
+            //
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        /**
+         * Show the form for creating a new resource.
+         */
+        public function create()
+        {
+            //
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        /**
+         * Store a newly created resource in storage.
+         */
+        public function store(Request $request)
+        {
+            //
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reviews $reviews)
-    {
-        //
-    }
+        /**
+         * Display the specified resource.
+         */
+        public function show(Review $reviews)
+        {
+            //
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Reviews $reviews)
-    {
-        //
-    }
+        /**
+         * Show the form for editing the specified resource.
+         */
+        public function edit(Review $reviews)
+        {
+            //
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reviews $reviews)
-    {
-        //
-    }
+        /**
+         * Update the specified resource in storage.
+         */
+        public function update(Request $request, Review $reviews)
+        {
+            //
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reviews $reviews)
-    {
-        //
+        /**
+         * Remove the specified resource from storage.
+         */
+        public function destroy(Review $reviews)
+        {
+            //
+        }
     }
-}

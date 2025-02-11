@@ -5,9 +5,9 @@
     use Illuminate\Database\Eloquent\Factories\Factory;
 
     /**
-     * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Faq>
+     * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Review>
      */
-    class FaqFactory extends Factory
+    class ReviewFactory extends Factory
     {
         /**
          * Define the model's default state.
@@ -17,8 +17,8 @@
         public function definition(): array
         {
             return [
-                'question' => $this->faker->sentence(),
-                'answer' => $this->faker->paragraph(),
+                'rating' => $this->faker->numberBetween(1, 5),
+                'review' => $this->faker->paragraph(),
             ];
         }
     }

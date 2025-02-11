@@ -1,5 +1,5 @@
 <x-frontend.layout>
-    
+
     <!-- single-product-area start-->
     <div class="single-product-area ptb-100">
         <div class="container">
@@ -19,12 +19,12 @@
                         </div>
                         <div class="product-thumbnil-active  owl-carousel">
                             @if( $product->images->count() > 0)
-                            @foreach($product->images as $image)
-                                <div class="item">
-                                    <img src="{{asset("storage/".$image->path)}}" alt="">
-                                </div>
+                                @foreach($product->images as $image)
+                                    <div class="item">
+                                        <img src="{{asset("storage/".$image->path)}}" alt="">
+                                    </div>
 
-                            @endforeach
+                                @endforeach
 
                             @endif
 
@@ -46,16 +46,18 @@
                                 <li>(05 Customar Review)</li>
                             </ul>
                         </div>
-                        <p>On the other hand, we denounce with righteous indignation and dislike men who are so beguiled
-                            and demoralized by the charms of pleasure of the moment, so blinded by desire, that they
-                            cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs</p>
-                        <ul class="input-style " >
+                        <p>
+                            {{$product->description}}
+                        </p>
+                        <ul class="input-style ">
                             <form action="/cart/{{$product->id}}" method="post">
-                            @csrf
-                            <li class="quantity cart-plus-minus">
-                                <input  type="text" name="quantity" value="1"/>
-                            </li>
-                            <li><button type="submit">Add to Cart</button></li>
+                                @csrf
+                                <li class="quantity cart-plus-minus">
+                                    <input type="text" name="quantity" value="1"/>
+                                </li>
+                                <li>
+                                    <button type="submit">Add to Cart</button>
+                                </li>
                             </form>
                         </ul>
                         <ul class="cetagory">
@@ -224,25 +226,26 @@
                         <div class="tab-pane" id="review">
                             <div class="review-wrap">
                                 <ul>
-                                    <li class="review-items">
-                                        <div class="review-img">
-                                            <img src="{{asset('assets')}}/images/comment/1.png" alt="">
-                                        </div>
-                                        <div class="review-content">
-                                            <h3><a href="#">GERALD BARNES</a></h3>
-                                            <span>27 Jun, 2019 at 2:30pm</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan
-                                                egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut
-                                                eget eni Praesent et messages in con sectetur posuere dolor non.</p>
-                                            <ul class="rating">
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                    @foreach($product->reviews as $review)
+                                        <li class="review-items">
+                                            <div class="review-img">
+                                                <img src="{{asset('assets')}}/images/comment/1.png" alt="">
+                                            </div>
+                                            <div class="review-content">
+                                                <h3><a href="#">{{dd($review->user())}}</a></h3>
+                                                <span>{{$review->created_at}}</span>
+                                                <p>{{$review->review}}</p>
+                                                <ul class="rating">
+
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    @endforeach
                                     <li class="review-items">
                                         <div class="review-img">
                                             <img src="{{asset('assets')}}/images/comment/2.png" alt="">
@@ -250,8 +253,10 @@
                                         <div class="review-content">
                                             <h3><a href="#">Olive Oil</a></h3>
                                             <span>15 may, 2019 at 2:30pm</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan
-                                                egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                                                accumsan
+                                                egestas elese ifend. Phasellus a felis at estei to bibendum feugiat
+                                                ut
                                                 eget eni Praesent et messages in con sectetur posuere dolor non.</p>
                                             <ul class="rating">
                                                 <li><i class="fa fa-star"></i></li>
@@ -269,8 +274,10 @@
                                         <div class="review-content">
                                             <h3><a href="#">Nature Honey</a></h3>
                                             <span>14 janu, 2019 at 2:30pm</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer accumsan
-                                                egestas elese ifend. Phasellus a felis at estei to bibendum feugiat ut
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
+                                                accumsan
+                                                egestas elese ifend. Phasellus a felis at estei to bibendum feugiat
+                                                ut
                                                 eget eni Praesent et messages in con sectetur posuere dolor non.</p>
                                             <ul class="rating">
                                                 <li><i class="fa fa-star"></i></li>
