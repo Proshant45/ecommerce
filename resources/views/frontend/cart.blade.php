@@ -20,7 +20,7 @@
                             @php
                                 $sum = 0;
                             @endphp
-                            @if(session('cart_items'))
+                            @if(!Auth::check())
                                 @php
                                     $cart_items = session('cart_items');
                                 @endphp
@@ -31,6 +31,7 @@
                                         $sum += $total;
 
                                     @endphp
+
                                     <tr>
                                         <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
 
@@ -47,7 +48,7 @@
                                             </i></td>
                                     </tr>
                                 @endforeach
-                            @elseif(Auth::check())
+                            @elseif(Auth::check() )
                                 @foreach($cart_items as $item)
                                     @php
                                         $price = $item->product->price;
@@ -63,8 +64,9 @@
                                         <td class="ptice">{{$price}}</td>
                                         <td class="quantity cart-plus-minus">
                                             <input type="hidden" name="new_quantity[]"/>
-                                            <input type="text" name="quantity" min="1"
-                                                   value="1" value="{{$item->quantity}}"/>
+                                            <input type="text" name="quantity"
+
+                                                   value="{{$item->quantity}}"/>
                                         </td>
                                         <td class="total">{{$total}} TK</td>
                                         <td class="remove"><i class="fa fa-times">

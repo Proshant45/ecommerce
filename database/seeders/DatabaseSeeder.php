@@ -2,6 +2,7 @@
 
     namespace Database\Seeders;
 
+    use App\Models\Cart;
     use App\Models\Category;
     use App\Models\Faq;
     use App\Models\Product;
@@ -36,12 +37,25 @@
                 ]
             );
             $user->roles()->attach($userRole);
-            $users = User::factory(10)->create();
+            $users = User::factory(10)->has(Cart::factory())->create();
 
             $categories = Category::factory(3)->create();
             $products = Product::factory(100)->hasAttached($categories)
                 ->has(Faq::factory(5))->create();
-            Review::factory()->recycle($users)->create();
+
+            $products->each(function ($product) use ($users) {
+                Review::factory(5)
+                    ->state(function () use ($users) {
+                        return ['user_id' => $users->random()->id];
+                    })
+                    ->for($product)
+                    ->create();
+            });
+
+//            Review::factory(5)
+//                ->recycle($users)
+//                ->for($products)
+//                ->create();
 
 
         }

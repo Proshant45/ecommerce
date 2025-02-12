@@ -51,6 +51,7 @@
             ]);
 
             $cart_items = $cart->items;
+            
 
             return view('frontend.cart', ['cart_items' => $cart_items]);
         }

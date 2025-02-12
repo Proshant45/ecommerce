@@ -122,7 +122,12 @@
                         <li>
                             @if(auth()->check())
                                 <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
-                                    {{auth()->user()->cart->totalQuantity()}}
+                                        @if(auth()->user()->cart)
+                                            {{--                                              requires only for database seeders--}}
+                                            {{auth()->user()->cart->items->count()}}
+                                        @else
+                                            0
+                                        @endif
                                 </span></a>
                             @else
                                 <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>
@@ -160,7 +165,7 @@
                                     </li>
                                 @endif
 
-                                @if(auth()->check())
+                                @if(auth()->check() && auth()->user()->cart)
                                     @php
                                         $cart_items = auth()->user()->cart->items;
                                         $total = 0;
