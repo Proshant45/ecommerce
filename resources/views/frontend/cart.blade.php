@@ -2,7 +2,14 @@
     <div class="cart-area ptb-100">
         <div class="container">
             <div class="row">
+
                 <div class="col-12">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{session('success')}}
+
+                        </div>
+                    @endif
                     <form action="/cart" method="post">
                         @csrf
                         <table class="table-responsive cart-wrap">
@@ -20,7 +27,7 @@
                             @php
                                 $sum = 0;
                             @endphp
-                            @if(!Auth::check())
+                            @if(!Auth::check() && session('cart_items'))
                                 @php
                                     $cart_items = session('cart_items');
                                 @endphp
@@ -34,12 +41,12 @@
 
                                     <tr>
                                         <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
-
-                                        <td class="product"><a href="single-product.html">{{$item['name']}} </a></td>
+                                        <td class="product"><a
+                                                    href="">{{$item['name']}} </a></td>
 
                                         <td class="ptice">{{$item['price']}}</td>
                                         <td class="quantity cart-plus-minus">
-                                            <input type="hidden" name="new_quantity[]"/>
+                                            <input type="hidden" name="products[]" value="{{$item['product_id']}}"/>
                                             <input type="text" name="quantity" value="{{$item['quantity']}}"/>
                                         </td>
                                         <td class="total">{{$total}} TK</td>
@@ -58,14 +65,13 @@
                                     <tr>
                                         <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
 
-                                        <td class="product"><a href="single-product.html">{{$item->product->name}}</a>
+                                        <td class="product"><a
+                                                    href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
                                         </td>
 
-                                        <td class="ptice">{{$price}}</td>
+                                        <td class="price">{{$price}}</td>
                                         <td class="quantity cart-plus-minus">
-                                            <input type="hidden" name="new_quantity[]"/>
                                             <input type="text" name="quantity"
-
                                                    value="{{$item->quantity}}"/>
                                         </td>
                                         <td class="total">{{$total}} TK</td>

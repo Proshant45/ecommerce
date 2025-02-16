@@ -51,7 +51,7 @@
             ]);
 
             $cart_items = $cart->items;
-            
+
 
             return view('frontend.cart', ['cart_items' => $cart_items]);
         }
@@ -110,6 +110,24 @@
         public function updateCart(Request $request)
         {
             dd($request->all());
+            if (!Auth::check()) {
+                $cartItems = session()->get('cart_items', []);
+
+
+//                "name" => "Miss Krystel Cartwright"
+//                "product_id" => "2"
+//                 "quantity" => 10
+//                "price" => "165.69"
+
+                foreach ($cartItems as $key => $item) {
+                    $cartItems[$key]['quantity'] = $request->new_quantity[$item['product_id']];
+                    $cartItems[$key]['price'] = $item['price'] * $request->new_quantity[$item['product_id']];
+
+                }
+
+                session()->put('cart_items', $cartItems);
+                return redirect()->back()->with('success', 'Cart updated');
+            }
 
             return redirect()->back();
         }
@@ -125,12 +143,12 @@
         public function removeFromCart($id)
         {
             if (!Auth::check()) {
-                $cartItems = collect(session()->get('cart_items', []));
-
+                $cartItems = session()->get('cart_items', []);
                 foreach ($cartItems as $key => $item) {
                     if ($key == $id) {
-                        unset($cartItems[$id]);
-
+                        unset($cartItems[$key]);
+                        session()->put('cart_items', $cartItems);
+                        return redirect()->back()->with('success', 'Product removed from cart');
 
                     }
                 }
@@ -140,4 +158,5 @@
 
             return redirect()->back()->with('success', 'Product removed from cart');
         }
+
     }

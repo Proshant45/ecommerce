@@ -29,16 +29,17 @@
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
     Route::middleware('auth')->group(function () {
-        Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
     Route::get('/admin/product_upload', [ProductController::class, 'create'])->name('product.create');
     Route::post('/admin/product_upload', [ProductController::class, 'store'])->name('product.store');
+
 
     require __DIR__.'/auth.php';
     require __DIR__.'/admin.php';

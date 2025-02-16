@@ -330,7 +330,8 @@
     $(".cart-plus-minus").append('<div class="dec qtybutton">-</div><div class="inc qtybutton">+</div>');
     $(".qtybutton").on("click", function () {
         var $button = $(this);
-        var oldValue = $button.parent().find("input").val();
+        var oldValue = $button.parent().find("input[name='quantity']").val();
+        console.log(oldValue);
         if ($button.text() == "+") {
             var newVal = parseFloat(oldValue) + 1;
         } else {
