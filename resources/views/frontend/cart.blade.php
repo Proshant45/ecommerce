@@ -10,8 +10,9 @@
 
                         </div>
                     @endif
-                    <form action="/cart" method="post">
+                    <form action="{{url("/cart/update")}}" method="post">
                         @csrf
+
                         <table class="table-responsive cart-wrap">
                             <thead>
                             <tr>
@@ -30,23 +31,28 @@
                             @if(!Auth::check() && session('cart_items'))
                                 @php
                                     $cart_items = session('cart_items');
+
                                 @endphp
                                 @foreach($cart_items as $item)
                                     @php
 
                                         $total = $item['price'] * $item['quantity'];
+
                                         $sum += $total;
-
                                     @endphp
-
+                                    <input type="hidden" name="ids[]"
+                                           value="{{$item['product_id']}}"/>
                                     <tr>
                                         <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
                                         <td class="product"><a
                                                     href="">{{$item['name']}} </a></td>
 
-                                        <td class="ptice">{{$item['price']}}</td>
+                                        <td class="price">{{$item['price']}}</td>
                                         <td class="quantity cart-plus-minus">
-                                            <input type="hidden" name="products[]" value="{{$item['product_id']}}"/>
+
+
+                                            <input type="hidden" name="quantities[]"
+                                                   value="{{$item['quantity']}}"/>
                                             <input type="text" name="quantity" value="{{$item['quantity']}}"/>
                                         </td>
                                         <td class="total">{{$total}} TK</td>
@@ -62,6 +68,10 @@
                                         $total = $item->quantity * $price;
                                         $sum += $total;
                                     @endphp
+                                    <input type="hidden" name="ids[]"
+                                           value="{{$item->product->id}}"/>
+
+
                                     <tr>
                                         <td class="images"><img src="{{asset('assets')}}/images/cart/1.jpg" alt=""></td>
 
@@ -71,8 +81,9 @@
 
                                         <td class="price">{{$price}}</td>
                                         <td class="quantity cart-plus-minus">
-                                            <input type="text" name="quantity"
-                                                   value="{{$item->quantity}}"/>
+                                            <input type="hidden" name="quantities[][]"
+                                                   value="{{$item['quantity']}}"/>
+                                            <input type="text" name="quantity" value="{{$item->quantity}}"/>
                                         </td>
                                         <td class="total">{{$total}} TK</td>
                                         <td class="remove"><i class="fa fa-times">
@@ -89,7 +100,8 @@
                                 <div class="cartcupon-wrap">
                                     <ul class="d-flex">
                                         <li>
-                                            <button type="submit" formaction="{{url("/cart/update")}}">Update Cart
+                                            <button type="submit" class="gfgh" formaction="{{url("/cart/update")}}">
+                                                Update Cart
                                             </button>
                                         </li>
                                         <li><a href="/shop">Continue Shopping</a></li>

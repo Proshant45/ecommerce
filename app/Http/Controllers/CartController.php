@@ -14,9 +14,11 @@
         {
             if (!Auth::check()) {
                 $cartItems = collect(session()->get('cart_items', []));
+
                 $cart_items = $cartItems->map(function ($item) {
                     $cartItem = new CartItem;
                     $cartItem->product = Product::find($item['product_id']);
+
                     $cartItem->quantity = $item['quantity'];
 
                     return $cartItem;
@@ -31,17 +33,9 @@
         public function cart()
         {
 
-
             if (!Auth::check()) {
+                $cart_items = session()->get('cart_items', []);
 
-                $cartItems = collect(session()->get('cart_items', []));
-                $cart_items = $cartItems->map(function ($item) {
-                    $cartItem = new CartItem;
-                    $cartItem->product = Product::find($item['product_id']);
-                    $cartItem->quantity = $item['quantity'];
-
-                    return $cartItem;
-                });
 
                 return view('frontend.cart', ['cart_items' => $cart_items]);
             }
@@ -107,30 +101,40 @@
             return redirect()->back()->with('success', 'Product added to cart');
         }
 
+
         public function updateCart(Request $request)
         {
-            dd($request->all());
+            $cart_ids = $request->ids;
+            $quantities = $request->quantities;
+            $updated_card = [];
+
             if (!Auth::check()) {
-                $cartItems = session()->get('cart_items', []);
+                $cartItems = session()->get('cart_items');
 
-
-//                "name" => "Miss Krystel Cartwright"
-//                "product_id" => "2"
-//                 "quantity" => 10
-//                "price" => "165.69"
-
-                foreach ($cartItems as $key => $item) {
-                    $cartItems[$key]['quantity'] = $request->new_quantity[$item['product_id']];
-                    $cartItems[$key]['price'] = $item['price'] * $request->new_quantity[$item['product_id']];
-
+                foreach ($cart_ids as $key => $cart_id) {
+                    $new_cart = $cartItems[$cart_id];
+                    $new_cart['quantity'] = $quantities[$key];
+                    $updated_card[$cart_id] = $new_cart;
                 }
 
-                session()->put('cart_items', $cartItems);
+                session()->put('cart_items', $updated_card);
                 return redirect()->back()->with('success', 'Cart updated');
+            }
+
+            $cart = auth()->user()->cart;
+            $cart_ids = $cart_ids;
+
+            foreach ($request->ids as $key => $id) {
+                $cartItem = $cart->items()->where('product_id', $id)->first();
+                if ($cartItem) {
+                    $cartItem->quantity = (int) $request->quantities[$key];
+                    $cartItem->save();
+                }
             }
 
             return redirect()->back();
         }
+
 
         public function applyCoupon(Request $request)
         {

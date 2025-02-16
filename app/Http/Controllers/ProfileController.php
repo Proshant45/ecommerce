@@ -16,7 +16,6 @@
          */
 
         public function index()
-
         {
             $user = Auth::user();
             return view('frontend.profile', ['user' => $user]);
@@ -24,7 +23,7 @@
 
         public function edit(Request $request): View
         {
-            return view('profile.edit', [
+            return view('frontend.setting', [
                 'user' => $request->user(),
             ]);
         }
@@ -48,6 +47,7 @@
         /**
          * Delete the user's account.
          */
+
         public function destroy(Request $request): RedirectResponse
         {
             $request->validateWithBag('userDeletion', [

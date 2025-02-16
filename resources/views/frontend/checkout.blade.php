@@ -11,7 +11,6 @@
                                     <p>Full Name *</p>
                                     <input type="text" name="name" value="{{auth()->user()->name}}">
                                 </div>
-
                                 <div class="col-sm-6 col-12">
                                     <p>Email Address </p>
                                     <input type="email" name="email" value="{{auth()->user()->email}}">

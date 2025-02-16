@@ -47,7 +47,7 @@
                                     @if(url()->current() != url('/profile'))
                                         <li><a href="{{url('/profile')}}">Profile</a></li>
                                     @endif
-                                    <li><a href="{{url('/setting')}}">Settings</a></li>
+                                    <li><a href="{{url('/profile/setting')}}">Settings</a></li>
                                     <li><a href="{{url('/orders')}}">Order</a></li>
                                     <li><a href="{{url('/wishlist')}}">Wishlist</a></li>
                                     <li><a href="{{ url('/logout') }}">Log out</a></li>
