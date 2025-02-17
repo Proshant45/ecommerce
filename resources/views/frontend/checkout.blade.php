@@ -1,11 +1,14 @@
 <x-frontend.layout>
     <div class="checkout-area ptb-100">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="checkout-form form-style">
-                        <h3>Billing Details</h3>
-                        <form action="http://themepresss.com/tf/html/tohoney/checkout">
+            <form action="{{route('checkout.store')}}" method="post">
+                @csrf
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="checkout-form form-style">
+
+                            <h3>Billing Details</h3>
+
                             <div class="row">
                                 <div class="col-sm-6 col-12">
                                     <p>Full Name *</p>
@@ -36,7 +39,7 @@
                                     <input type="text" name="city">
                                 </div>
                                 <div class="col-12">
-                                    <input id="toggle2" type="checkbox">
+                                    <input id="toggle2" type="checkbox" name="ship_to_different_address">
                                     <label class="fontsize" for="toggle2">Ship to a different address?</label>
                                     <div class="row" id="open2">
                                         <div class="col-12">
@@ -96,54 +99,54 @@
                                               placeholder="Notes about Your Order, e.g.Special Note for Delivery"></textarea>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="order-area">
-                        <h3>Your Order</h3>
-                        <ul class="total-cost">
-                            @php
-                                $sub_total = 0;
-                            @endphp
-                            @foreach($cart_items as $item)
-
+                    <div class="col-lg-4">
+                        <div class="order-area">
+                            <h3>Your Order</h3>
+                            <ul class="total-cost">
                                 @php
-                                    $product = $item->product;
-                                    $total_price = $product->price * $item->quantity;
-                                    $sub_total += $total_price
-
+                                    $sub_total = 0;
                                 @endphp
-                                <li>{{$item->product->name}} <span class="pull-right">{{$item->quantity}} x {{$product->price}} = {{ $total_price}} </span>
-                                </li>
-                            @endforeach
+                                @foreach($cart_items as $item)
 
-                            <li>Subtotal <span class="pull-right"><strong>{{$sub_total}}</strong></span></li>
-                            <li>Shipping <span class="pull-right">Free</span></li>
-                            <li>Total<span class="pull-right">{{$sub_total}}</span></li>
-                        </ul>
-                        <ul class="payment-method">
-                            <li>
-                                <input id="bank" type="checkbox">
-                                <label for="bank">Direct Bank Transfer</label>
-                            </li>
-                            <li>
-                                <input id="paypal" type="checkbox">
-                                <label for="paypal">Paypal</label>
-                            </li>
-                            <li>
-                                <input id="card" type="checkbox">
-                                <label for="card">Credit Card</label>
-                            </li>
-                            <li>
-                                <input id="delivery" type="checkbox">
-                                <label for="delivery">Cash on Delivery</label>
-                            </li>
-                        </ul>
-                        <button>Place Order</button>
+                                    @php
+                                        $product = $item->product;
+                                        $total_price = $product->price * $item->quantity;
+                                        $sub_total += $total_price
+
+                                    @endphp
+                                    <li>{{$item->product->name}} <span class="pull-right">{{$item->quantity}} x {{$product->price}} = {{ $total_price}} </span>
+                                    </li>
+                                @endforeach
+
+                                <li>Subtotal <span class="pull-right"><strong>{{$sub_total}}</strong></span></li>
+                                <li>Shipping <span class="pull-right">Free</span></li>
+                                <li>Total<span class="pull-right">{{$sub_total}}</span></li>
+                            </ul>
+                            <ul class="payment-method">
+                                <li>
+                                    <input id="bank" type="checkbox" name="payment_method" value="bank">
+                                    <label for="bank">Direct Bank Transfer</label>
+                                </li>
+                                <li>
+                                    <input id="paypal" type="checkbox" name="payment_method" value="paypal">
+                                    <label for="paypal">Paypal</label>
+                                </li>
+                                <li>
+                                    <input id="card" type="checkbox" name="payment_method" value="card">
+                                    <label for="card">Credit Card</label>
+                                </li>
+                                <li>
+                                    <input id="delivery" type="checkbox" name="payment_method" value="COD">
+                                    <label for="delivery">Cash on Delivery</label>
+                                </li>
+                            </ul>
+                            <button type="submit">Place Order</button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </x-frontend.layout>

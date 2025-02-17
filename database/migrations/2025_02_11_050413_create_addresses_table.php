@@ -13,15 +13,14 @@
             Schema::create('addresses', function (Blueprint $table) {
                 $table->id();
                 $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
-                $table->string('address_type');
-                $table->string('first_name');
+                $table->string('address_type')->default('billing');
+                $table->string('first_name')->nullable();
                 $table->string('last_name')->nullable();
-                $table->string('address');
-                $table->string('city');
-                $table->string('state');
-                $table->string('zip');
                 $table->string('phone');
                 $table->string('email');
+                $table->string('address');
+                $table->string('city');
+                $table->string('zip');
                 $table->string('country');
 
 

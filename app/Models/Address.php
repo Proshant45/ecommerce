@@ -10,7 +10,16 @@
         /** @use HasFactory<\Database\Factories\AddressFactory> */
         use HasFactory;
 
-        protected $fillable = ['user_id', 'address', 'city', 'state', 'zip'];
+        protected $fillable = [
+            'user_id',
+            'address_type',
+            'phone',
+            'email',
+            'address',
+            'city',
+            'country',
+            'zip'
+        ];
 
         public function user()
         {

@@ -24,7 +24,7 @@
                 'slug' => $this->faker->slug(),
                 'description' => $this->faker->text(),
                 'price' => $this->faker->randomFloat(2, 1, 1000),
-                'discount_price' => $this->faker->randomFloat(2, 1, 1000),
+                'discount_rate' => $this->faker->randomFloat(2, 0, 100),
                 'stock' => $this->faker->randomNumber(2),
                 'is_active' => $this->faker->boolean(),
             ];

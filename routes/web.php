@@ -28,13 +28,13 @@
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
-    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/wishlist', [CartController::class, 'wishlist'])->name('wishlist');
 
 
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
+        Route::post('/checkout', [CheckOutController::class, 'store'])->name('checkout.store');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/profile/setting', [ProfileController::class, 'edit'])->name('profile.edit');
     });

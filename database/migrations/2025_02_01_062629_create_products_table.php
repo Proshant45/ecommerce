@@ -16,7 +16,7 @@
                 $table->string('slug')->unique();
                 $table->text('description');
                 $table->decimal('price', 10, 2);
-                $table->decimal('discount_price', 10, 2)->default(0);
+                $table->decimal('discount_rate', 5, 2)->default(0);
                 $table->integer('stock')->default(0);
                 $table->string('image')->nullable();
                 $table->boolean('is_active')->default(true);

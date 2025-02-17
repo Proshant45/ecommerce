@@ -5,10 +5,10 @@
                 <!-- Profile Section -->
                 <div class="mb-5">
                     <h2 class="h5 fw-semibold text-center">Edit Profile</h2>
-                    <p class="text-muted small">This information will be displayed publicly so be careful what you
-                        share.
-                    </p>
                 </div>
+                <x-frontend.edit_profile>
+
+                </x-frontend.edit_profile>
             </div>
         </div>
     </main>

@@ -14,7 +14,7 @@
         /** @use HasFactory<ProductFactory> */
         use HasFactory;
 
-        protected $fillable = ['name', 'slug', 'price', 'description', 'is_active', 'stock', 'image', 'discount_price'];
+        protected $fillable = ['name', 'slug', 'price', 'description', 'is_active', 'stock', 'image', 'discount_rate'];
 
         public function category($id)
         {

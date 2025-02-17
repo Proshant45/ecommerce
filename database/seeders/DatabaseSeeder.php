@@ -5,6 +5,7 @@
     use App\Models\Cart;
     use App\Models\Category;
     use App\Models\Faq;
+    use App\Models\Image;
     use App\Models\Product;
     use App\Models\Review;
     use App\Models\Role;
@@ -51,11 +52,6 @@
                     ->for($product)
                     ->create();
             });
-
-//            Review::factory(5)
-//                ->recycle($users)
-//                ->for($products)
-//                ->create();
 
 
         }

@@ -163,4 +163,9 @@
             return redirect()->back()->with('success', 'Product removed from cart');
         }
 
+        public function wishlist()
+        {
+            return view('frontend.wishlist');
+        }
+
     }

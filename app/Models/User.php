@@ -5,6 +5,7 @@
     // use Illuminate\Contracts\Auth\MustVerifyEmail;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+    use Illuminate\Database\Eloquent\Relations\HasMany;
     use Illuminate\Database\Eloquent\Relations\HasOne;
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Illuminate\Notifications\Notifiable;
@@ -22,6 +23,7 @@
         protected $fillable = [
             'name',
             'email',
+            'phone',
             'password',
         ];
 
@@ -72,6 +74,16 @@
         public function reviews(): HasMany
         {
             return $this->hasMany(Review::class);
+        }
+
+        public function billingAddress(): HasOne
+        {
+            return $this->hasOne(Address::class)->where('address_type', 'billing');
+        }
+
+        public function shippingAddress(): HasOne
+        {
+            return $this->hasOne(Address::class)->where('address_type', 'shipping');
         }
 
     }
