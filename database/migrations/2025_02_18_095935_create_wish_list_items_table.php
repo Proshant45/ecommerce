@@ -10,9 +10,10 @@
          */
         public function up(): void
         {
-            Schema::create('wishlists', function (Blueprint $table) {
+            Schema::create('wish_list_items', function (Blueprint $table) {
                 $table->id();
-                $table->foreignIdFor(\App\Models\User::class)->constrained()->cascadeOnDelete();
+                $table->foreignIdFor(\App\Models\Product::class)->constrained()->cascadeOnDelete();
+                $table->foreignIdFor(\App\Models\Wishlist::class)->constrained()->cascadeOnDelete();
                 $table->timestamps();
             });
         }
@@ -22,6 +23,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('wishlists');
+            Schema::dropIfExists('wish_list_items');
         }
     };

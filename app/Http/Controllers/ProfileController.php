@@ -1,7 +1,6 @@
 <?php
 
     namespace App\Http\Controllers;
-
     use App\Http\Requests\ProfileUpdateRequest;
     use App\Models\Address;
     use Illuminate\Http\RedirectResponse;

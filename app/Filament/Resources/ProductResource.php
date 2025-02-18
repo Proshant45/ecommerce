@@ -4,14 +4,21 @@
 
     use App\Filament\Resources\ProductResource\Pages;
     use App\Filament\Resources\ProductResource\RelationManagers;
+    use App\Models\Image;
     use App\Models\Product;
     use Filament\Forms;
+    use Filament\Forms\Components\FileUpload;
+    use Filament\Forms\Components\Select;
+    use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
     use Filament\Forms\Form;
+    use Filament\Forms\Set;
     use Filament\Resources\Resource;
     use Filament\Tables;
     use Filament\Tables\Table;
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\SoftDeletingScope;
+    use Closure;
+    use Illuminate\Support\Str;
 
     class ProductResource extends Resource
     {
@@ -25,10 +32,15 @@
                 ->schema([
                     Forms\Components\TextInput::make('name')
                         ->required()
-                        ->maxLength(255),
-                    Forms\Components\TextInput::make('slug')
-                        ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->live(debounce: 500)
+                        ->afterStateUpdated(fn(Set $set, ?string $state) => $set('slug', Str::slug($state)))
+                    ,
+                    Forms\Components\TextInput::make('slug'),
+
+                    Select::make('category_id')
+                        ->relationship(name: 'categories', titleAttribute: 'name'),
+
                     Forms\Components\Textarea::make('description')
                         ->required()
                         ->columnSpanFull(),
@@ -36,7 +48,7 @@
                         ->required()
                         ->numeric()
                         ->prefix('$'),
-                    Forms\Components\TextInput::make('discount_price')
+                    Forms\Components\TextInput::make('discount_rate')
                         ->required()
                         ->numeric()
                         ->default(0.00),
@@ -44,10 +56,32 @@
                         ->required()
                         ->numeric()
                         ->default(0),
-                    Forms\Components\FileUpload::make('image')
+                    FileUpload::make('Featured Image')
+                        ->directory('uploads')
+                        ->saveRelationshipsUsing(function ($record, $state) {
+                            if ($state) {
+                                $record->images()->create([
+                                    'path' => $state,
+                                    'name' => 'featured',
+                                    'is_main' => true
+                                ]);
+                            }
+                        }),
+                    FileUpload::make('Product Images')
                         ->multiple()
                         ->directory('uploads')
-                        ->image(),
+                        ->saveRelationshipsUsing(function ($record, $state) {
+                            if ($state) {
+                                foreach ($state as $path) {
+                                    $record->images()->create([
+                                        'path' => $path,
+                                        'name' => 'other_images',
+                                        'is_featured' => false
+                                    ]);
+                                }
+                            }
+                        }),
+
                     Forms\Components\Toggle::make('is_active')
                         ->required(),
                 ]);
@@ -64,7 +98,7 @@
                     Tables\Columns\TextColumn::make('price')
                         ->money()
                         ->sortable(),
-                    Tables\Columns\TextColumn::make('discount_price')
+                    Tables\Columns\TextColumn::make('discount_rate')
                         ->numeric()
                         ->sortable(),
                     Tables\Columns\TextColumn::make('stock')
@@ -99,6 +133,7 @@
         {
             return [
                 'categories' => RelationManagers\CategoriesRelationManager::class,
+                'images' => RelationManagers\ImagesRelationManager::class,
             ];
         }
 

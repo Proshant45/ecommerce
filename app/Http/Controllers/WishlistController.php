@@ -1,65 +1,50 @@
 <?php
 
-namespace App\Http\Controllers;
+    namespace App\Http\Controllers;
 
-use App\Models\Wishlist;
-use Illuminate\Http\Request;
+    use App\Models\Product;
+    use App\Models\Wishlist;
+    use App\Models\WishListItem;
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Auth;
 
-class WishlistController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    class WishlistController extends Controller
     {
-        //
-    }
+        public function wishlist()
+        {
+            $wishlist = Wishlist::firstOrCreate([
+                'user_id' => Auth::id(),
+            ]);
+            $wishlist_items = $wishlist->items;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            return view('frontend.wishlist', ['wishlist_items' => $wishlist_items]);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        public function addToWislist($id)
+        {
+            $product = Product::findOrFail($id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Wishlist $wishlist)
-    {
-        //
-    }
+            $wishlist = Wishlist::firstOrCreate([
+                'user_id' => auth()->user()->id,
+            ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Wishlist $wishlist)
-    {
-        //
-    }
+            $wishlistitem = $wishlist->items()->where('product_id', $id)->first();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Wishlist $wishlist)
-    {
-        //
-    }
+            if ($wishlistitem) {
+                return redirect()->back()->with('error', 'Product already in wishlist');
+            }
+            $wishlistitem = new WishListItem([
+                'product_id' => $id,
+            ]);
+            $wishlist->items()->save($wishlistitem);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Wishlist $wishlist)
-    {
-        //
+            return redirect()->back()->with('success', 'Product added to cart');
+        }
+
+        public function removeFromwishlist($id)
+        {
+            WishListItem::where('id', $id)->delete();
+
+            return redirect()->back()->with('success', 'Product removed from Wishlish');
+        }
     }
-}

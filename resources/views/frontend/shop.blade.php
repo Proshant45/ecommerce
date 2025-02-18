@@ -26,23 +26,26 @@
                     <ul class="row">
                         @foreach($products as $product)
                             <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
-
                                 <div class="product-wrap">
                                     <div class="product-img">
-                                        <span class="z-index-1">Sale</span>
+                                        <span style="z-index:1">{{$product->discount_rate}} %</span>
                                         <img src="{{asset('assets')}}/images/product/15.jpg" alt="">
                                         <div class="product-icon flex-style">
                                             <ul>
                                                 <li><a data-toggle="modal" data-target="#exampleModalCenter"
                                                        href="javascript:void(0);"><i class="fa fa-eye"></i></a></li>
-                                                <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
-                                                <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a></li>
+                                                <li><a href="/wishlist/{{$product->id}}"><i class="fa fa-heart"></i></a>
+                                                </li>
+                                                <li><a href="/cart/{{$product->id}}"><i class="fa fa-shopping-bag"></i></a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="product-content">
                                         <h3><a href="shop/{{$product->slug}}">{{$product->name}}</a></h3>
-                                        <p class="pull-left">{{$product->price}}
+                                        <p class="pull-left">
+                                            <del class="pr-3">{{$product->price}}</del>
+                                            <span>  {{$product->price - (($product->discount_rate)/100)*$product->price}} </span>
                                         </p>
                                         <ul class="pull-right d-flex">
                                             <li><i class="fa fa-star"></i></li>
@@ -67,10 +70,10 @@
                                 $category_product = $category->products()->paginate(8);
                             @endphp
                             @foreach($category_product as $product)
-                                <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
+                                <li class=" col-xl-3 col-lg-4 col-sm-6 col-12 ">
                                     <div class="product-wrap">
                                         <div class="product-img">
-                                            <span class="z-index-1">Sale</span>
+                                            <span style="z-index:1">{{$product->discount_rate}} % OFF</span>
                                             <img src="{{asset('assets')}}/images/product/18.jpg" alt="">
                                             <div class="product-icon flex-style">
                                                 <ul>
@@ -85,7 +88,9 @@
                                         </div>
                                         <div class="product-content">
                                             <h3><a href="/">{{$product->name}}</a></h3>
-                                            <p class="pull-left">{{$product->price}}
+                                            <p class="pull-left">
+                                                <del class="pr-3">{{$product->price}}</del>
+                                                <span>  {{$product->price - (($product->discount_rate)/100)*$product->price}} </span>
                                             </p>
                                             <ul class="pull-right d-flex">
                                                 <li><i class="fa fa-star"></i></li>

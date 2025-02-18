@@ -180,7 +180,8 @@
                                                 <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
                                                 <span>QTY : {{$item->quantity}}</span>
                                                 <p>{{$item->product->price}} TK</p>
-                                                <i class="fa fa-times"></i>
+                                                <a href="/cart/delete/{{$item->id}}"><i
+                                                            class="fa fa-times"></i></a>
                                             </div>
                                         </li>
                                         @php
@@ -191,7 +192,7 @@
 
                                     <li>Subtotol: <span class="pull-right">{{$total}} TK</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <button><a href="/checkout">Check Out</a></button>
                                     </li>
                                 @endif
                             </ul>

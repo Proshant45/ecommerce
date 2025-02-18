@@ -66,6 +66,11 @@
 
         }
 
+        public function wishlist(): HasOne
+        {
+            return $this->hasOne(Wishlist::class);
+        }
+
         public function addresses(): HasMany
         {
             return $this->hasMany(Address::class);

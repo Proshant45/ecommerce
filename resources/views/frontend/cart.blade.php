@@ -86,9 +86,8 @@
                                             <input type="text" name="quantity" value="{{$item->quantity}}"/>
                                         </td>
                                         <td class="total">{{$total}} TK</td>
-                                        <td class="remove"><i class="fa fa-times">
-                                                <a href="/cart/delete/{{$item->id}}">Remove</a>
-                                            </i></td>
+                                        <td class="remove"><a href="/cart/delete/{{$item->id}}"><i
+                                                        class="fa fa-times"></i></a></td>
                                     </tr>
                                 @endforeach
                             @endif

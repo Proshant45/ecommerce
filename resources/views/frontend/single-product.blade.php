@@ -62,7 +62,8 @@
                                     <input type="text" name="quantity" value="1"/>
                                 </li>
                                 <li>
-                                    <button type="submit">Add to Cart</button>
+                                    <button style="background-color: #fb923c; border:none; padding:4px; ">Add to Cart
+                                    </button>
                                 </li>
                             </form>
                         </ul>
