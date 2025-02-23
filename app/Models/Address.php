@@ -12,7 +12,7 @@
 
         protected $fillable = [
             'user_id',
-            'address_type',
+            'type',
             'phone',
             'email',
             'address',

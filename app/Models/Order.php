@@ -11,10 +11,11 @@
         /** @use HasFactory<\Database\Factories\OrderFactory> */
         use HasFactory;
 
-        public function items()
-        {
-            return $this->hasMany(OrderItem::class);
-        }
+        protected $fillable = [
+            'user_id', 'payment_method', 'status', 'cart_items', 'total_price', 'shipping_address'
+            , 'shipping_address', 'billing_address', 'payment_status', 'payment_id'
+        ];
+
 
         public function user()
         {
@@ -24,6 +25,22 @@
         public function address(): HasMany
         {
             return $this->hasMany(Address::class);
+        }
+
+        public function paymentMethod()
+        {
+            return $this->belongsTo(PaymentMethod::class);
+        }
+
+
+        protected function casts(): array
+        {
+            return [
+                'shipping_address' => 'json',
+                'billing_address' => 'json',
+                'cart_items' => 'json'
+
+            ];
         }
 
     }

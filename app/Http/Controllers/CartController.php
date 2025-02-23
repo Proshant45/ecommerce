@@ -101,7 +101,6 @@
             return redirect()->back()->with('success', 'Product added to cart');
         }
 
-
         public function updateCart(Request $request)
         {
             $cart_ids = $request->ids;

@@ -10,6 +10,18 @@
 
     class WishlistController extends Controller
     {
+
+        public static function navWishlist()
+        {
+            $wishlist = Wishlist::firstOrCreate([
+                'user_id' => Auth::id(),
+            ]);
+            $wishlist_items = $wishlist->items;
+
+            return $wishlist_items;
+
+        }
+
         public function wishlist()
         {
             $wishlist = Wishlist::firstOrCreate([

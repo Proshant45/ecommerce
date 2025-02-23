@@ -5,6 +5,7 @@
     use App\Http\Controllers\CheckOutController;
     use App\Http\Controllers\ContactController;
     use App\Http\Controllers\HomeController;
+    use App\Http\Controllers\OrderController;
     use App\Http\Controllers\ProductController;
     use App\Http\Controllers\ProfileController;
     use App\Http\Controllers\WishlistController;
@@ -33,9 +34,6 @@
 
     Route::get('/checkout', [CheckOutController::class, 'create'])->name('checkout.index');
     Route::get('/blog', [HomeController::class, 'blog'])->name('blog.show');
-    Route::get('/', [HomeController::class, 'index']);
-    Route::get('/about', [HomeController::class, 'about'])->name('about');
-    Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 
 
     Route::middleware('auth')->group(function () {
@@ -44,6 +42,9 @@
         Route::post('/checkout', [CheckOutController::class, 'store'])->name('checkout.store');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/profile/setting', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
+        Route::get('/order_successfull', [OrderController::class, 'successfullyPlaced'])->name('order.successfull');
+        Route::get('/order/delete/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
     });
 
     require __DIR__.'/auth.php';

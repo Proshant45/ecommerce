@@ -1,5 +1,9 @@
 @php
     $guest_cart_item = guestCart();
+    if(auth()->check()){
+        $wishlist_items = wishlist();
+
+    }
 @endphp
 <div class="preloader-wrap">
     <div class="spinner"></div>
@@ -197,48 +201,33 @@
                                 @endif
                             </ul>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);"><i class="flaticon-shop"></i> <span>3</span></a>
-                            <ul class="cart-wrap dropdown_style">
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{asset('assets')}}/images/cart/1.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li class="cart-items">
-                                    <div class="cart-img">
-                                        <img src="{{asset('assets')}}/images/cart/2.jpg" alt="">
-                                    </div>
-                                    <div class="cart-content">
-                                        <a href="cart.html">Pure Nature Product</a>
-                                        <span>QTY : 1</span>
-                                        <p>$35.00</p>
-                                        <i class="fa fa-times"></i>
-                                    </div>
-                                </li>
-                                <li>Subtotol: <span class="pull-right">$70.00</span></li>
-                                <li>
-                                    <button>Check Out</button>
-                                </li>
-                            </ul>
-                        </li>
+                        @if(auth()->check())
+                            <li>
+                                <a href="javascript:void(0);"><i class="flaticon-like"></i> <span>
+                                {{count($wishlist_items)}}
+                                </span></a>
+                                <ul class="cart-wrap dropdown_style">
+                                    @foreach($wishlist_items as $item)
+                                        <li class="cart-items">
+                                            <div class="cart-img">
+                                                <img src="{{asset('assets')}}/images/cart/3.jpg" alt="">
+                                            </div>
+                                            <div class="cart-content">
+                                                <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
+                                                <span>QTY : {{$item->quantity}}</span>
+                                                <p>{{$item->product->price}}</p>
+                                                <a href="/wishlist/delete/{{$item->id}}"><i
+                                                            class="fa fa-times"></i></a>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                    <li>Subtotol: <span class="pull-right">$70.00</span></li>
+                                    <li>
+                                        <button>Check Out</button>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </div>
                 <div class="col-md-1 col-sm-1 col-2 d-block d-lg-none">

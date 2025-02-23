@@ -1,6 +1,7 @@
 <?php
 
     namespace App\Http\Controllers;
+
     use App\Http\Requests\ProfileUpdateRequest;
     use App\Models\Address;
     use Illuminate\Http\RedirectResponse;
@@ -31,7 +32,7 @@
         /**
          * Update the user's profile information.
          */
-        public function update(ProfileUpdateRequest $request): RedirectResponse
+        public function update(Request $request): RedirectResponse
         {
 
             $user_data = $request->validate([
@@ -61,8 +62,9 @@
             );
 
             Address::updateOrCreate(
-                ['user_id' => $user->id, 'address_type' => 'billing'],
+                ['user_id' => $user->id, 'type' => 'billing'],
                 [
+                    'type' => 'billing',
                     'phone' => $user_data['phone'],
                     'email' => $user_data['email'],
                     'address' => $request->billing_address,
@@ -82,8 +84,9 @@
             );
 
             Address::updateOrCreate(
-                ['user_id' => $user->id, 'address_type' => 'shipping'],
+                ['user_id' => $user->id, 'type' => 'shipping'],
                 [
+                    'type' => 'shipping',
                     'phone' => $user_data['phone'],
                     'email' => $user_data['email'],
                     'address' => $request->shipping_address,

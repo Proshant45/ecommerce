@@ -15,14 +15,17 @@
             Schema::create('orders', function (Blueprint $table) {
                 $table->id();
                 $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-                $table->foreignIdFor(PaymentMethod::class);
-                $table->string('invoice_number')->unique();
+                $table->string('payment_method');
+                $table->string('invoice_number')->nullable();
+                $table->json('order_items')->nullable();
                 $table->decimal('total_price', 15, 2);
-                $table->decimal('shipping_price', 15, 2);
-                $table->enum('status', ['PENDING', 'SUCCESS', 'FAILED']);
-                $table->text('shipping_address');
-                $table->text('billing_address');
+                $table->decimal('shipping_price', 15, 2)->default(0);
+                $table->enum('status', ['PENDING', 'SUCCESS', 'FAILED', 'CANCELLED']);
+                $table->json('shipping_address');
+                $table->json('billing_address');
                 $table->text('notes')->nullable();
+                $table->string('payment_status')->nullable()->default('Unpaid');
+                $table->string('payment_id')->nullable();
                 $table->timestamp('paid_at')->nullable();
                 $table->timestamp('canceled_at')->nullable();
                 $table->timestamp('finished_at')->nullable();

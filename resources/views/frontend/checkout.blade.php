@@ -20,23 +20,27 @@
                                 </div>
                                 <div class="col-sm-6 col-12">
                                     <p>Mobile Number *</p>
-                                    <input type="text" name="phone">
+                                    <input type="text" name="phone" value="{{auth()->user()->phone ?? ''}}">
                                 </div>
                                 <div class="col-12">
                                     <p>Country </p>
-                                    <input type="text" name="country">
+                                    <input type="text" name="billingCountry"
+                                           value="{{auth()->user()->billingAddress->country ?? ''}}">
                                 </div>
                                 <div class="col-12">
                                     <p>Your Address *</p>
-                                    <input type="text" name="address">
+                                    <input type="text" name="billingAddress"
+                                           value="{{auth()->user()->billingAddress->address ?? ''}}">
                                 </div>
                                 <div class="col-sm-6 col-12">
                                     <p>Postcode/ZIP</p>
-                                    <input type="text" name="zip">
+                                    <input type="text" name="billingZip"
+                                           value={{auth()->user()->billingAddress->zip ?? ''}}>
                                 </div>
                                 <div class="col-sm-6 col-12">
                                     <p>Town/City *</p>
-                                    <input type="text" name="city">
+                                    <input type="text" name="billingCity"
+                                           value="{{auth()->user()->billingAddress->city ?? ''}}">
                                 </div>
                                 <div class="col-12">
                                     <input id="toggle2" type="checkbox" name="ship_to_different_address">
@@ -126,19 +130,19 @@
                             </ul>
                             <ul class="payment-method">
                                 <li>
-                                    <input id="bank" type="checkbox" name="payment_method" value="bank">
+                                    <input id="bank" type="checkbox" name="paymentMethod" value="bank">
                                     <label for="bank">Direct Bank Transfer</label>
                                 </li>
                                 <li>
-                                    <input id="paypal" type="checkbox" name="payment_method" value="paypal">
+                                    <input id="paypal" type="checkbox" name="paymentMethod" value="paypal">
                                     <label for="paypal">Paypal</label>
                                 </li>
                                 <li>
-                                    <input id="card" type="checkbox" name="payment_method" value="card">
+                                    <input id="card" type="checkbox" name="paymentMethod" value="card">
                                     <label for="card">Credit Card</label>
                                 </li>
                                 <li>
-                                    <input id="delivery" type="checkbox" name="payment_method" value="COD">
+                                    <input id="delivery" type="checkbox" name="paymentMethod" value="COD">
                                     <label for="delivery">Cash on Delivery</label>
                                 </li>
                             </ul>

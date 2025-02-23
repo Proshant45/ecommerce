@@ -14,8 +14,8 @@
                 $table->id();
                 $table->string('name');
                 $table->string('type');
-                $table->string('description');
-                $table->string('logo');
+                $table->string('description')->nullable();
+                $table->string('logo')->nullable();
                 $table->boolean('is_active')->default(true);
                 $table->boolean('is_default')->default(false);
                 $table->timestamps();

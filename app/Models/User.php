@@ -83,12 +83,23 @@
 
         public function billingAddress(): HasOne
         {
-            return $this->hasOne(Address::class)->where('address_type', 'billing');
+            return $this->hasOne(Address::class)->where('type', 'billing');
         }
 
         public function shippingAddress(): HasOne
         {
-            return $this->hasOne(Address::class)->where('address_type', 'shipping');
+            return $this->hasOne(Address::class)->where('type', 'shipping');
         }
+
+        public function orders(): HasMany
+        {
+            return $this->hasMany(Order::class);
+        }
+
+        public function paymentMethod(): HasMany
+        {
+            return $this->hasMany(PaymentMethod::class);
+        }
+
 
     }
