@@ -18,6 +18,7 @@
     Route::post('/cart/coupon', [CartController::class, 'applyCoupon'])->name('cart.coupon');
     Route::get('/shop', [ProductController::class, 'index'])->name('shop.index');
     Route::get('/shop/{slug}', [ProductController::class, 'show'])->name('shop.show');
+    Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
     Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
@@ -27,10 +28,6 @@
     Route::get('/cart/{slug}', [CartController::class, 'show'])->name('cart.show');
     Route::get('/cart/delete/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-    Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist.index');
-    Route::get('/wishlist/{id}', [WishlistController::class, 'addToWislist'])->name('wishlist.add');
-    Route::get('/wishlist/{slug}', [WishlistController::class, 'show'])->name('wishlist.show');
-    Route::get('/wishlist/delete/{id}', [WishlistController::class, 'removeFromwishlist'])->name('wishlist.remove');
 
     Route::get('/checkout', [CheckOutController::class, 'create'])->name('checkout.index');
     Route::get('/blog', [HomeController::class, 'blog'])->name('blog.show');
@@ -43,8 +40,14 @@
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/profile/setting', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::get('/orders', [OrderController::class, 'index'])->name('order.index');
-        Route::get('/order_successfull', [OrderController::class, 'successfullyPlaced'])->name('order.successfull');
+        Route::get('/order_successfull/{id}',
+            [OrderController::class, 'successfullyPlaced'])->name('order.successfull');
         Route::get('/order/delete/{id}', [OrderController::class, 'destroy'])->name('order.destroy');
+        Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.show');
+        Route::get('/wishlist', [WishlistController::class, 'wishlist'])->name('wishlist.index');
+        Route::get('/wishlist/{id}', [WishlistController::class, 'addToWislist'])->name('wishlist.add');
+        Route::get('/wishlist/{slug}', [WishlistController::class, 'show'])->name('wishlist.show');
+        Route::get('/wishlist/delete/{id}', [WishlistController::class, 'removeFromwishlist'])->name('wishlist.remove');
     });
 
     require __DIR__.'/auth.php';

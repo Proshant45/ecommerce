@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Filament\Resources\ReviewResource\Pages;
+use App\Filament\Resources\ReviewResource\RelationManagers;
+use App\Models\Review;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserResource extends Resource
+class ReviewResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Review::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,22 +23,19 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone')
-                    ->tel()
-                    ->maxLength(255)
+                Forms\Components\TextInput::make('product_id')
+                    ->numeric()
                     ->default(null),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
-                Forms\Components\TextInput::make('password')
-                    ->password()
+                Forms\Components\TextInput::make('user_id')
+                    ->numeric()
+                    ->default(null),
+                Forms\Components\Textarea::make('review')
+                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('rating')
                     ->required()
-                    ->maxLength(255),
+                    ->numeric(),
+                Forms\Components\Toggle::make('is_approved')
+                    ->required(),
             ]);
     }
 
@@ -46,15 +43,17 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('phone')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('product_id')
+                    ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('user_id')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('rating')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_approved')
+                    ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -87,9 +86,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListReviews::route('/'),
+            'create' => Pages\CreateReview::route('/create'),
+            'edit' => Pages\EditReview::route('/{record}/edit'),
         ];
     }
 }

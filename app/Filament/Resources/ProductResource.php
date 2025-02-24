@@ -4,12 +4,10 @@
 
     use App\Filament\Resources\ProductResource\Pages;
     use App\Filament\Resources\ProductResource\RelationManagers;
-    use App\Models\Image;
     use App\Models\Product;
     use Filament\Forms;
     use Filament\Forms\Components\FileUpload;
     use Filament\Forms\Components\Select;
-    use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
     use Filament\Forms\Form;
     use Filament\Forms\Set;
     use Filament\Resources\Resource;
@@ -17,7 +15,6 @@
     use Filament\Tables\Table;
     use Illuminate\Database\Eloquent\Builder;
     use Illuminate\Database\Eloquent\SoftDeletingScope;
-    use Closure;
     use Illuminate\Support\Str;
 
     class ProductResource extends Resource
@@ -56,32 +53,27 @@
                         ->required()
                         ->numeric()
                         ->default(0),
-                    FileUpload::make('Featured Image')
-                        ->directory('uploads')
-                        ->saveRelationshipsUsing(function ($record, $state) {
-                            if ($state) {
-                                $record->images()->create([
-                                    'path' => $state,
-                                    'name' => 'featured',
-                                    'is_main' => true
-                                ]);
-                            }
-                        }),
-                    FileUpload::make('Product Images')
-                        ->multiple()
-                        ->directory('uploads')
-                        ->saveRelationshipsUsing(function ($record, $state) {
-                            if ($state) {
-                                foreach ($state as $path) {
-                                    $record->images()->create([
-                                        'path' => $path,
-                                        'name' => 'other_images',
-                                        'is_featured' => false
-                                    ]);
-                                }
-                            }
-                        }),
+                    Forms\Components\FileUpload::make('image')
+                        ->image()
+                        ->disk('public')
+                        ->directory('products/featured-images'),
 
+                    Forms\Components\Repeater::make('images')
+                        ->relationship()
+                        ->schema([
+                            FileUpload::make('path')
+                                ->disk('public')
+                                ->directory('products/images')
+                                ->image()
+                                ->required()
+                                ->columnSpanFull(),
+                            Forms\Components\TextInput::make('name')
+                                ->required()
+                                ->maxLength(255),
+                            Forms\Components\Toggle::make('is_main')
+                                ->label('Main Image?')
+                                ->default(false),
+                        ]),
                     Forms\Components\Toggle::make('is_active')
                         ->required(),
                 ]);
@@ -132,8 +124,7 @@
         public static function getRelations(): array
         {
             return [
-                'categories' => RelationManagers\CategoriesRelationManager::class,
-                'images' => RelationManagers\ImagesRelationManager::class,
+                //
             ];
         }
 

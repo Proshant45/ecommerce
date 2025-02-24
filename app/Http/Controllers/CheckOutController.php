@@ -126,18 +126,30 @@
 
             $total_price = $cart->totalAmount();
 
-
             if ($request->paymentMethod == 'COD') {
+
                 $order = Auth::user()->orders()->create([
                     'total_price' => $total_price,
                     'payment_method' => 'COD',
-                    'order_items' => json_encode($cart_items),
                     'billing_address' => Address::findOrfail($addresses['billing_address_id']),
                     'shipping_address' => Address::findOrfail($addresses['shipping_address_id']),
                     'status' => 'pending',
                     'notes' => $request->massage,
                 ]);
-                return redirect("/order_successfull");
+                foreach ($cart_items as $cart_item) {
+                    $cart_item->product->decrement('stock', $cart_item->quantity);
+                    $order_item = $order->items()->create([
+                        'order_id' => $order->id,
+                        'product_id' => $cart_item->product_id,
+                        'quantity' => $cart_item->quantity,
+                        'price' => $cart_item->product->price,
+                        'total_price' => $cart_item->product->price * $cart_item->quantity,
+                        'product_name' => $cart_item->product->name,
+                        'product_image' => $cart_item->product->image,
+
+                    ]);
+                }
+                return redirect("/order_successfull/{$order->id}");
             }
 
         }

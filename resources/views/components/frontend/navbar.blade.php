@@ -223,7 +223,7 @@
                                     @endforeach
                                     <li>Subtotol: <span class="pull-right">$70.00</span></li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <button><a href="/wishlist">WishList</a></button>
                                     </li>
                                 </ul>
                             </li>

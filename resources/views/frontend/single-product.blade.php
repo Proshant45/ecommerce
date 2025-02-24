@@ -20,6 +20,9 @@
                                     <img src="{{asset("storage/".$image->path)}}" alt="">
                                 </div>
                             @endforeach
+                            <div class="item">
+                                <img src="{{asset("storage/".$product->image)}}" alt="">
+                            </div>
 
 
                         </div>
@@ -70,7 +73,7 @@
                         <ul class="cetagory">
                             <li>Categories:</li>
                             @foreach($product->categories as $category)
-                                <li><a href="#">{{$category->name}}</a></li>
+                                <li><a href="/category/{{$category->slug}}">{{$category->name}}</a></li>
                             @endforeach
 
                         </ul>

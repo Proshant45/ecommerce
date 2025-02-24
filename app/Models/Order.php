@@ -12,7 +12,7 @@
         use HasFactory;
 
         protected $fillable = [
-            'user_id', 'payment_method', 'status', 'cart_items', 'total_price', 'shipping_address'
+            'user_id', 'payment_method', 'status', 'total_price', 'shipping_address'
             , 'shipping_address', 'billing_address', 'payment_status', 'payment_id'
         ];
 
@@ -32,13 +32,17 @@
             return $this->belongsTo(PaymentMethod::class);
         }
 
+        public function items(): HasMany
+        {
+            return $this->hasMany(OrderItem::class);
+        }
+
 
         protected function casts(): array
         {
             return [
                 'shipping_address' => 'json',
                 'billing_address' => 'json',
-                'cart_items' => 'json'
 
             ];
         }

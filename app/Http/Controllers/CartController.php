@@ -103,6 +103,7 @@
 
         public function updateCart(Request $request)
         {
+
             $cart_ids = $request->ids;
             $quantities = $request->quantities;
             $updated_card = [];
@@ -124,6 +125,7 @@
             $cart_ids = $cart_ids;
 
             foreach ($request->ids as $key => $id) {
+
                 $cartItem = $cart->items()->where('product_id', $id)->first();
                 if ($cartItem) {
                     $cartItem->quantity = (int) $request->quantities[$key];

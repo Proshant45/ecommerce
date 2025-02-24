@@ -7,9 +7,14 @@
 
     class OrderController extends Controller
     {
-        /**
-         * Display a listing of the resource.
-         */
+
+        public function show($id)
+        {
+            $order = auth()->user()->orders->where('id', $id)->first();
+
+            return view('frontend.order_details', ['order' => $order]);
+        }
+
         public function index()
         {
 
@@ -18,9 +23,10 @@
             return view('frontend.order', ['orders' => $orders]);
         }
 
-        public function successfullyPlaced()
+        public function successfullyPlaced($id)
         {
-            return view('frontend.order_successfull');
+            $order = Order::where('id', $id)->first();
+            return view('frontend.order_successfull', ['order' => $order]);
         }
 
         public function destroy($id)

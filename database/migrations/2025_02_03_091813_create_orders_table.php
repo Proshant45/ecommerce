@@ -17,7 +17,6 @@
                 $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
                 $table->string('payment_method');
                 $table->string('invoice_number')->nullable();
-                $table->json('order_items')->nullable();
                 $table->decimal('total_price', 15, 2);
                 $table->decimal('shipping_price', 15, 2)->default(0);
                 $table->enum('status', ['PENDING', 'SUCCESS', 'FAILED', 'CANCELLED']);

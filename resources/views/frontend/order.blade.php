@@ -18,16 +18,16 @@
                         </thead>
                         <tbody>
                         @foreach($orders as $order)
-                            <tr>
-                                <td>{{$order->id}}</td>
-                                <td>{{$order->total_price}}</td>
-                                <td>{{$order->payment_method}}</td>
-                                <td>{{$order->payment_status}}</td>
-                                <td>{{$order->created_at}}</td>
-                                <td>{{$order->status}}</td>
-                                <td> {{$order->shipping_address['address']}},
-                                    {{$order->shipping_address['city']}}</td>
-                                <td><a href="/order/delete/{{$order->id}}">Cancel</a></td>
+                            <td><a href="/order/{{$order->id}}">View</a></td>
+                            <td>{{$order->id}}</td>
+                            <td>{{$order->total_price}}</td>
+                            <td>{{$order->payment_method}}</td>
+                            <td>{{$order->payment_status}}</td>
+                            <td>{{$order->created_at}}</td>
+                            <td>{{$order->status}}</td>
+                            <td> {{$order->shipping_address['address']}},
+                                {{$order->shipping_address['city']}}</td>
+                            <td><a href="/order/delete/{{$order->id}}">Cancel</a></td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -11,7 +11,6 @@
                                 <a class="active" data-toggle="tab" href="#all">All product</a>
                             </li>
                             @foreach($categories as $category)
-
                                 <li>
                                     <a data-toggle="tab" href="#{{$category->slug}}">{{$category->name}}</a>
                                 </li>

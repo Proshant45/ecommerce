@@ -79,7 +79,7 @@
 
                                         <td class="price">{{$price}}</td>
                                         <td class="quantity cart-plus-minus">
-                                            <input type="hidden" name="quantities[][]"
+                                            <input type="hidden" name="quantities[]"
                                                    value="{{$item['quantity']}}"/>
                                             <input type="text" name="quantity" value="{{$item->quantity}}"/>
                                         </td>
