@@ -138,6 +138,7 @@
                 ]);
                 foreach ($cart_items as $cart_item) {
                     $cart_item->product->decrement('stock', $cart_item->quantity);
+                    $price_after_discount = $cart_item->product->price - ($cart_item->product->discount_rate) / 100;
                     $order_item = $order->items()->create([
                         'order_id' => $order->id,
                         'product_id' => $cart_item->product_id,
@@ -149,6 +150,8 @@
 
                     ]);
                 }
+                $cart->items()->delete();
+
                 return redirect("/order_successfull/{$order->id}");
             }
 

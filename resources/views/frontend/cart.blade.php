@@ -27,6 +27,7 @@
                             <tbody>
                             @php
                                 $sum = 0;
+                                $price_after_discount = 0;
                             @endphp
                             @if(!Auth::check() && session('cart_items'))
                                 @php
@@ -63,8 +64,13 @@
                                 @foreach($cart_items as $item)
                                     @php
                                         $price = $item->product->price;
+                                        $discounted_price= $price-($price * ($item->product->discount_rate)/100);
+
                                         $total = $item->quantity * $price;
+                                        $discounted_total =  $item->quantity * $discounted_price;
                                         $sum += $total;
+                                        $price_after_discount += $discounted_total
+
                                     @endphp
                                     <input type="hidden" name="ids[]"
                                            value="{{$item->product->id}}"/>
@@ -116,7 +122,9 @@
                                     <h3>Cart Totals</h3>
                                     <ul>
                                         <li><span class="pull-left">Subtotal </span>{{$sum}} Taka</li>
-                                        <li><span class="pull-left"> Total </span>{{$sum}} Taka</li>
+                                        <li><span class="pull-left">Discount </span>{{$sum-$price_after_discount}} Taka
+                                        </li>
+                                        <li><span class="pull-left"> Total </span>{{$price_after_discount}} Taka</li>
                                     </ul>
                                     <a href="/checkout">Proceed to Checkout</a>
                                 </div>

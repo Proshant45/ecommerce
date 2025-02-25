@@ -1,5 +1,6 @@
 <?php
 
+    use App\Http\Controllers\BlogController;
     use App\Http\Controllers\CartController;
     use App\Http\Controllers\CategoryController;
     use App\Http\Controllers\CheckOutController;
@@ -14,12 +15,14 @@
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+    Route::post('/news_letter', [HomeController::class, 'store'])->name('news_letter');
     Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
     Route::post('/cart/coupon', [CartController::class, 'applyCoupon'])->name('cart.coupon');
     Route::get('/shop', [ProductController::class, 'index'])->name('shop.index');
     Route::get('/shop/{slug}', [ProductController::class, 'show'])->name('shop.show');
     Route::get('/category/{slug}', [CategoryController::class, 'show'])->name('category.show');
-    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+
 
     Route::get('/cart', [CartController::class, 'cart'])->name('cart.index');
     Route::post('/cart', [CartController::class, 'checkout'])->name('cart.store');
@@ -28,7 +31,7 @@
     Route::get('/cart/{slug}', [CartController::class, 'show'])->name('cart.show');
     Route::get('/cart/delete/{id}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
-
+    Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.detail');
     Route::get('/checkout', [CheckOutController::class, 'create'])->name('checkout.index');
     Route::get('/blog', [HomeController::class, 'blog'])->name('blog.show');
 

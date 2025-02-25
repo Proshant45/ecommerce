@@ -72,7 +72,7 @@
                         'name' => $product->name,
                         'product_id' => $id,
                         'quantity' => $quantity,
-                        'price' => $product->price,
+                        'price' => $product->price * ($product->discount_rate) / 100,
                     ];
                 }
 

@@ -101,5 +101,11 @@
             return $this->hasMany(PaymentMethod::class);
         }
 
+        public function blog(): HasMany
+        {
+            return $this->hasMany(Blog::class);
+
+        }
+
 
     }

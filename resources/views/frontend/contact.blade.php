@@ -10,7 +10,7 @@
                     <div class="breadcumb-wrap text-center">
                         <h2>Contact Us</h2>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
+                            <li><a href="/">Home</a></li>
                             <li><span>Contact</span></li>
                         </ul>
                     </div>
@@ -41,23 +41,36 @@
                             @csrf
                             <div class="row">
                                 <div class="col-12 col-sm-6">
+                                    <label>Name</label>
                                     <input type="text" placeholder="Name" id="fname" name="name"
                                            value=" {{old('name')}}">
                                 </div>
                                 <div class="col-12  col-sm-6">
-                                    <input type="text" placeholder="Email" id="email" name="email"
+                                    <label>Email</label>
+                                    <input type="email" placeholder="Email" id="email" name="email"
                                            value=" {{old('email')}}">
                                 </div>
                                 <div class="col-12">
+                                    <label>Subject</label>
                                     <input type="text" placeholder="Subject" id="subject" name="subject"
                                            value=" {{old('subject')}}">
                                 </div>
                                 <div class="col-12">
+                                    <label>Message</label>
                                     <textarea class="contact-textarea" placeholder="message" id="msg"
                                               name="message"></textarea>
                                 </div>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <div class="col-12">
-                                    <button id="submit" name="submit">SEND MESSAGE</button>
+                                    <button type="submit">SEND MESSAGE</button>
                                 </div>
                             </div>
                         </form>

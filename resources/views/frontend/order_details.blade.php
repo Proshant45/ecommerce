@@ -5,13 +5,25 @@
             <div class="card-header">
                 Order Information
             </div>
-            <div class="card-body">
-                <p><strong>Order ID:</strong> #{{$order->id}}</p>
-                <p><strong>Order Date:</strong> {{$order->created_at}}</p>
-                <p><strong>Status:</strong> {{$order->status}}</p>
-                <p><strong>Total Price:</strong>{{$order->total_price}}</p>
+            <div class="card-body d-flex justify-content-between">
+                <div>
+                    <p><strong>Order ID:</strong> #{{$order->id}}</p>
+                    <p><strong>Order Date:</strong> {{$order->created_at}}</p>
+                    <p><strong>Status:</strong> {{$order->status}}</p>
+                    <p><strong>Total Price:</strong>{{$order->total_price}}</p>
+                </div>
+                <div>
+                    <p><strong>Shipping Address</strong></p>
+                    <p><strong>Address:</strong> #{{$order->shipping_address['address']}}</p>
+                    <p><strong>City:</strong> {{$order->shipping_address['city']}}</p>
+                    <p><strong>Zip:</strong> {{$order->shipping_address['zip']}}</p>
+                </div>
+
             </div>
+
         </div>
+
+
         <div class="card">
             <div class="card-header">
                 Order Items
@@ -38,11 +50,34 @@
                             <td>{{$orderItem->quantity}}</td>
                             <td>{{$orderItem->price}}</td>
                             <td>{{$orderItem->price * $orderItem->quantity}}</td>
+
                         </tr>
                     @endforeach
-
-                    <!-- Additional order items can be added here -->
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Shipping</td>
+                        <td>{{$order->shipping_price}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Sub Total</td>
+                        <td>{{$order->total_price}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><strong> Total</strong></td>
+                        <td>
+                            <strong>{{$order->total_price + $order->shipping_price}}</strong>
+                        </td>
+                    </tr>
                     </tbody>
+
                 </table>
             </div>
         </div>

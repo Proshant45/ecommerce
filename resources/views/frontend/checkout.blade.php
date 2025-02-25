@@ -110,23 +110,28 @@
                             <h3>Your Order</h3>
                             <ul class="total-cost">
                                 @php
-                                    $sub_total = 0;
+
+                                    $sum = 0;
+                                    $price_after_discount = 0;
                                 @endphp
                                 @foreach($cart_items as $item)
-
                                     @php
-                                        $product = $item->product;
-                                        $total_price = $product->price * $item->quantity;
-                                        $sub_total += $total_price
-
+                                        $price = $item->product->price;
+                                        $discounted_price= $price-($price * ($item->product->discount_rate)/100);
+                                        $total = $item->quantity * $price;
+                                        $discounted_total =  $item->quantity * $discounted_price;
+                                        $sum += $total;
+                                        $price_after_discount += $discounted_total;
                                     @endphp
-                                    <li>{{$item->product->name}} <span class="pull-right">{{$item->quantity}} x {{$product->price}} = {{ $total_price}} </span>
+                                    <li>{{ $item->product->name}} <span class="pull-right">{{$item->quantity}} x {{$item->product->price}} = <del
+                                                    class="pr-3"> {{$total}}</del>{{ $discounted_total}}  </span>
                                     </li>
                                 @endforeach
 
-                                <li>Subtotal <span class="pull-right"><strong>{{$sub_total}}</strong></span></li>
+                                <li>Subtotal <span class="pull-right"><strong>{{$sum}}</strong></span></li>
+                                <li>Discount <span class="pull-right">{{$sum - $price_after_discount}}</span></li>
                                 <li>Shipping <span class="pull-right">Free</span></li>
-                                <li>Total<span class="pull-right">{{$sub_total}}</span></li>
+                                <li>Total<span class="pull-right">{{$price_after_discount}}</span></li>
                             </ul>
                             <ul class="payment-method">
                                 <li>

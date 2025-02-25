@@ -29,7 +29,11 @@
     <link rel="stylesheet" href="{{asset('assets')}}/css/responsive.css">
     <!-- modernizr css -->
     <script src="{{asset('assets')}}/js/vendor/modernizr-2.8.3.min.js"></script>
-
+    <style>
+        body {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
 <x-frontend.navbar/>

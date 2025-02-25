@@ -143,6 +143,7 @@
                             <ul class="cart-wrap dropdown_style">
                                 @php
                                     $total = 0;
+                                    $price_after_discount = 0;
                                 @endphp
                                 @if(!auth()->check() && count($guest_cart_item) > 0)
 
@@ -155,15 +156,19 @@
                                             <div class="cart-content">
                                                 <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
                                                 <span>QTY : {{$item['quantity']}}TK</span>
-                                                <p>{{$item->product->price}}</p>
+                                                <p>{{$item->product->price -($item->product->price * (($item->product->discount_rate)/100))}}</p>
                                             </div>
                                         </li>
+
                                         @php
+                                            $price_after_discount += $item->product->price -($item->product->price* (($item->product->discount_rate)/100));
                                             $total += $item['quantity']* $item->product->price;
                                         @endphp
                                     @endforeach
 
                                     <li>Subtotol: <span class="pull-right">${{$total}}</span></li>
+                                    <li>Discount: <span class="pull-right">${{$total - $price_after_discount}}</span>
+                                    </li>
                                     <li>
                                         <button>Check Out</button>
                                     </li>
@@ -173,6 +178,8 @@
                                     @php
                                         $cart_items = auth()->user()->cart->items;
                                         $total = 0;
+                                        $price_after_discount = 0;
+
                                     @endphp
                                     @foreach($cart_items as $item)
                                         <li class="cart-items">
@@ -183,18 +190,19 @@
                                             <div class="cart-content">
                                                 <a href="/shop/{{$item->product->slug}}">{{$item->product->name}}</a>
                                                 <span>QTY : {{$item->quantity}}</span>
-                                                <p>{{$item->product->price}} TK</p>
+                                                <p>{{$item->product->price -($item->product->price * (($item->product->discount_rate)/100))}}</p>
                                                 <a href="/cart/delete/{{$item->id}}"><i
                                                             class="fa fa-times"></i></a>
                                             </div>
                                         </li>
                                         @php
-
+                                            $price_after_discount += $item->product->price -($item->product->price* (($item->product->discount_rate)/100));
                                             $total += $item->quantity * $item->product->price;
                                         @endphp
                                     @endforeach
 
-                                    <li>Subtotol: <span class="pull-right">{{$total}} TK</span></li>
+                                    <li>Subtotol: <span class="pull-right">{{$price_after_discount}} TK</span></li>
+                                    <li>Discount: <span class="pull-right">${{$total - $price_after_discount}}</span>
                                     <li>
                                         <button><a href="/checkout">Check Out</a></button>
                                     </li>
