@@ -7,27 +7,25 @@
 
     class BlogController extends Controller
     {
-        /**
-         * Display a listing of the resource.
-         */
-        public function index()
-        {
-            //
-        }
 
-        /**
-         * Show the form for creating a new resource.
-         */
-        public function create()
-        {
-            //
-        }
 
-        /**
-         * Store a newly created resource in storage.
-         */
-        public function store(Request $request)
+        public function storeComment(Request $request, $id)
         {
+            $attribute = $request->validate([
+                'comment' => 'required'
+            ]);
+            $blog = Blog::where('id', $id)->first();
+
+
+            $blog->comments()->create(
+                [
+                    'blog_id' => $id,
+                    'user_id' => auth()->user()->id,
+                    'body' => $attribute['comment'],
+                ]
+            );
+
+            return redirect()->back();
 
         }
 

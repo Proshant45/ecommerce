@@ -29,13 +29,10 @@
     <link rel="stylesheet" href="{{asset('assets')}}/css/responsive.css">
     <!-- modernizr css -->
     <script src="{{asset('assets')}}/js/vendor/modernizr-2.8.3.min.js"></script>
-    <style>
-        body {
-            scroll-behavior: smooth;
-        }
-    </style>
+    @livewireStyles
 </head>
 <body>
+@livewire('modal')
 <x-frontend.navbar/>
 {{$slot}}
 <x-frontend.footer/>
@@ -67,6 +64,7 @@
 <script src="{{asset('assets')}}/js/jquery-ui.min.js"></script>
 <!-- main js -->
 <script src="{{asset('assets')}}/js/scripts.js"></script>
+@livewireScripts
 </body>
 
 </html>

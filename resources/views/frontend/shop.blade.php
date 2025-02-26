@@ -1,4 +1,5 @@
 <x-frontend.layout>
+
     <!-- product-area start -->
 
     <div class="product-area pt-100">
@@ -76,8 +77,16 @@
                                             <img src="{{asset('assets')}}/images/product/18.jpg" alt="">
                                             <div class="product-icon flex-style">
                                                 <ul>
-                                                    <li><a data-toggle="modal" data-target="#exampleModalCenter"
-                                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a>
+                                                    <li>
+
+                                                        <button
+                                                                type="button"
+                                                                class="mt-3 w-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-800 px-4 py-2 rounded-lg transition-colors"
+                                                                wire:click="$dispatch('preview-product', { id: {{ $product->id }} })"
+                                                        >
+                                                            Quick Preview
+                                                        </button>
+
                                                     </li>
                                                     <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
                                                     <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a>
@@ -112,5 +121,6 @@
         </div>
     </div>
     </div>
+
     <x-frontend.news-letter/>
 </x-frontend.layout>

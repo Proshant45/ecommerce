@@ -1,6 +1,8 @@
 <?php
 
-return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\Filament\AdminPanelProvider::class,
-];
+    return [
+        App\Providers\AppServiceProvider::class,
+        App\Providers\Filament\AdminPanelProvider::class,
+        Livewire\LivewireServiceProvider::class,
+
+    ];

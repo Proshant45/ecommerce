@@ -11,10 +11,15 @@
         /** @use HasFactory<\Database\Factories\CommentFactory> */
         use HasFactory;
 
-        protected $fillable = [];
+        protected $fillable = ['blog_id', 'body', 'user_id'];
 
         public function blog(): BelongsTo
         {
             return $this->belongsTo(Blog::class);
+        }
+
+        public function user(): BelongsTo
+        {
+            return $this->belongsTo(User::class);
         }
     }

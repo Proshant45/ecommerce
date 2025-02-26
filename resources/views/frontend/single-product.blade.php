@@ -151,59 +151,61 @@
                                 </ul>
                             </div>
                             <div class="add-review">
-                                <h4>Add A Review</h4>
-                                <div class="ratting-wrap">
-                                    <table>
-                                        <thead>
-                                        <tr>
-                                            <th>task</th>
-                                            <th>1 Star</th>
-                                            <th>2 Star</th>
-                                            <th>3 Star</th>
-                                            <th>4 Star</th>
-                                            <th>5 Star</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>How Many Stars?</td>
-                                            <td>
-                                                <input type="radio" name="a"/>
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a"/>
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a"/>
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a"/>
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="a"/>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <h4>Name:</h4>
-                                        <input type="text" placeholder="Your name here..."/>
+                                <form action="/shop/product/{{$product->id}}">
+                                    <h4>Add A Review</h4>
+                                    <div class="ratting-wrap">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th>task</th>
+                                                <th>1 Star</th>
+                                                <th>2 Star</th>
+                                                <th>3 Star</th>
+                                                <th>4 Star</th>
+                                                <th>5 Star</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>How Many Stars?</td>
+                                                <td>
+                                                    <input type="radio" name="a"/>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="a"/>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="a"/>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="a"/>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="a"/>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    <div class="col-md-6 col-12">
-                                        <h4>Email:</h4>
-                                        <input type="email" placeholder="Your Email here..."/>
+                                    <div class="row">
+                                        <div class="col-md-6 col-12">
+                                            <h4>Name:</h4>
+                                            <input type="text" placeholder="Your name here..."/>
+                                        </div>
+                                        <div class="col-md-6 col-12">
+                                            <h4>Email:</h4>
+                                            <input type="email" placeholder="Your Email here..."/>
+                                        </div>
+                                        <div class="col-12">
+                                            <h4>Your Review:</h4>
+                                            <textarea name="massage" id="massage" cols="30" rows="10"
+                                                      placeholder="Your review here..."></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn-style">Submit</button>
+                                        </div>
                                     </div>
-                                    <div class="col-12">
-                                        <h4>Your Review:</h4>
-                                        <textarea name="massage" id="massage" cols="30" rows="10"
-                                                  placeholder="Your review here..."></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <button class="btn-style">Submit</button>
-                                    </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

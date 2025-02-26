@@ -1,27 +1,31 @@
 <?php
 
-namespace App\Providers;
+    namespace App\Providers;
 
 
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\ServiceProvider;
+    use App\Livewire\Modal;
+    use Illuminate\Pagination\Paginator;
+    use Illuminate\Support\ServiceProvider;
+    use Livewire\Livewire;
 
-class AppServiceProvider extends ServiceProvider
-{
-    /**
-     * Register any application services.
-     */
-    public function register(): void
+    class AppServiceProvider extends ServiceProvider
     {
+        /**
+         * Register any application services.
+         */
+        public function register(): void
+        {
 
-    }
+        }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Paginator::useBootstrapFive();
-        Paginator::useBootstrapFour();
+        /**
+         * Bootstrap any application services.
+         */
+        public function boot(): void
+        {
+            Paginator::useBootstrapFive();
+            Paginator::useBootstrapFour();
+            Livewire::component('modal', Modal::class);
+
+        }
     }
-}

@@ -51,6 +51,7 @@
         Route::get('/wishlist/{id}', [WishlistController::class, 'addToWislist'])->name('wishlist.add');
         Route::get('/wishlist/{slug}', [WishlistController::class, 'show'])->name('wishlist.show');
         Route::get('/wishlist/delete/{id}', [WishlistController::class, 'removeFromwishlist'])->name('wishlist.remove');
+        Route::post('/comment/{id}', [BlogController::class, 'storeComment'])->name('comment.store');
     });
 
     require __DIR__.'/auth.php';

@@ -3,6 +3,8 @@
     namespace App\Models;
 
     // use Illuminate\Contracts\Auth\MustVerifyEmail;
+    use Filament\Models\Contracts\FilamentUser;
+    use Filament\Panel;
     use Illuminate\Database\Eloquent\Factories\HasFactory;
     use Illuminate\Database\Eloquent\Relations\BelongsToMany;
     use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,7 +12,8 @@
     use Illuminate\Foundation\Auth\User as Authenticatable;
     use Illuminate\Notifications\Notifiable;
 
-    class User extends Authenticatable
+
+    class User extends Authenticatable implements FilamentUser
     {
         /** @use HasFactory<\Database\Factories\UserFactory> */
         use HasFactory, Notifiable;
@@ -42,6 +45,16 @@
          *
          * @return array<string, string>
          */
+
+        public function canAccessPanel(Panel $panel): bool
+        {
+            if ($panel->getId() === 'admin') {
+                return str_ends_with($this->email, 'admin@test') && $this->hasVerifiedEmail();
+            }
+
+            return true;
+        }
+
         protected function casts(): array
         {
             return [

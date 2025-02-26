@@ -28,10 +28,10 @@
 
             $request->session()->regenerate();
 
-            if (Auth::user()->roles->contains('name', 'admin')) {
-
-                return redirect()->intended(route('admin.dashboard', absolute: false));
-            }
+//            if (Auth::user()->roles->contains('name', 'admin')) {
+//
+//                return redirect()->intended(route(' filament.admin.pages.dashboard', absolute: false));
+//            }
 
             return redirect()->intended(route('home', absolute: false));
         }
