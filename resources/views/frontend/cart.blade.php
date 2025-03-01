@@ -61,6 +61,7 @@
                                     </tr>
                                 @endforeach
                             @elseif(Auth::check() )
+                                
                                 @foreach($cart_items as $item)
                                     @php
                                         $price = $item->product->price;

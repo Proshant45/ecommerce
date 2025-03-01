@@ -20,6 +20,7 @@
                 $table->decimal('price', 15, 2);
                 $table->decimal('total_price', 15, 2);
                 $table->string('product_name');
+                $table->string('discount')->nullable();
                 $table->string('product_image')->nullable();
                 $table->timestamps();
 

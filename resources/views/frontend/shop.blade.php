@@ -48,11 +48,9 @@
                                             <span>  {{$product->price - (($product->discount_rate)/100)*$product->price}} </span>
                                         </p>
                                         <ul class="pull-right d-flex">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star-half-o"></i></li>
+                                            @for($i = 1; $i <= $product->averageRating(); $i++)
+                                                <li><i class="fa fa-star"></i></li>
+                                            @endfor
                                         </ul>
                                     </div>
                                 </div>
@@ -78,15 +76,8 @@
                                             <div class="product-icon flex-style">
                                                 <ul>
                                                     <li>
-
-                                                        <button
-                                                                type="button"
-                                                                class="mt-3 w-full bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-800 px-4 py-2 rounded-lg transition-colors"
-                                                                wire:click="$dispatch('preview-product', { id: {{ $product->id }} })"
-                                                        >
-                                                            Quick Preview
-                                                        </button>
-
+                                                        <a data-toggle="modal" data-target="#exampleModalCenter"
+                                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a>
                                                     </li>
                                                     <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
                                                     <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a>
@@ -101,11 +92,9 @@
                                                 <span>  {{$product->price - (($product->discount_rate)/100)*$product->price}} </span>
                                             </p>
                                             <ul class="pull-right d-flex">
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star-half-o"></i></li>
+                                                @for($i = 1; $i <= $product->averageRating(); $i++)
+                                                    <li><i class="fa fa-star"></i></li>
+                                                @endfor
                                             </ul>
                                         </div>
                                     </div>

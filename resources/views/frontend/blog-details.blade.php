@@ -102,17 +102,7 @@
                 </div>
                 <div class="col-lg-3 col-12">
                     <aside class="sidebar-area">
-                        <div class="widget widget_categories">
-                            <h4 class="widget-title">Categories</h4>
-                            <ul>
-                                <li><a href="#">Coconut Oil</a></li>
-                                <li><a href="#">Honey</a></li>
-                                <li><a href="#">Olive Oil</a></li>
-                                <li><a href="#">Nut Oil</a></li>
-                                <li><a href="#">Mustard Oil</a></li>
-                                <li><a href="#">Sunrise Oil</a></li>
-                            </ul>
-                        </div>
+
                         <div class="widget widget_recent_entries recent_post">
                             <h4 class="widget-title">Recent Post</h4>
                             <ul>
@@ -128,24 +118,6 @@
                                 <li>
                                     <div class="post-img">
                                         <img src="assets/images/post/2.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <a href="blog-details.html">Lorem Ipsum is simply dummy text of the </a>
-                                        <p>19 JAN 2019</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-img">
-                                        <img src="assets/images/post/3.jpg" alt="">
-                                    </div>
-                                    <div class="post-content">
-                                        <a href="blog-details.html">Lorem Ipsum is simply dummy text of the </a>
-                                        <p>19 JAN 2019</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-img">
-                                        <img src="assets/images/post/4.jpg" alt="">
                                     </div>
                                     <div class="post-content">
                                         <a href="blog-details.html">Lorem Ipsum is simply dummy text of the </a>

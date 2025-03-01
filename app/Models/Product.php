@@ -37,6 +37,11 @@
             return $this->hasMany(Review::class);
         }
 
+        public function averageRating()
+        {
+            return $this->reviews()->avg('rating');
+        }
+
         public function faqs(): HasMany
         {
             return $this->hasMany(Faq::class);

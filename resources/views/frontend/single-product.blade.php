@@ -45,14 +45,14 @@
                     <div class="product-single-content">
                         <h3>{{$product->name}}</h3>
                         <div class="rating-wrap fix">
-                            <span class="pull-left">219.56 Taka</span>
+                            <span class="pull-left"><del>{{$product->price}}</del> </span>
+                            <span class="pull-left pl-2" style="color: #fb923c"> {{$product->price - (($product->discount_rate)/100)*$product->price}} Taka</span>
                             <ul class="rating pull-right">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li>(05 Customar Review)</li>
+                                @for($i = 1; $i <= $product->averageRating(); $i++)
+                                    <li><i class="fa fa-star"></i></li>
+                                @endfor
+
+                                <li>({{count($product->reviews)}} Customar Review)</li>
                             </ul>
                         </div>
                         <p>

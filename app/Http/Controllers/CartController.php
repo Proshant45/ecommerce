@@ -36,16 +36,13 @@
             if (!Auth::check()) {
                 $cart_items = session()->get('cart_items', []);
 
+            } else {
+                $cart = Cart::firstOrCreate([
+                    'user_id' => Auth::id(),
+                ]);
 
-                return view('frontend.cart', ['cart_items' => $cart_items]);
+                $cart_items = $cart->items;
             }
-
-            $cart = Cart::firstOrCreate([
-                'user_id' => Auth::id(),
-            ]);
-
-            $cart_items = $cart->items;
-
 
             return view('frontend.cart', ['cart_items' => $cart_items]);
         }

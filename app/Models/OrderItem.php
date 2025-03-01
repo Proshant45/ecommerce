@@ -11,7 +11,7 @@
         use HasFactory;
 
         protected $fillable = [
-            'order_id', 'product_id', 'product_name', 'product_image', 'quantity', 'price', 'total_price',
+            'order_id', 'product_id', 'product_name', 'product_image', 'quantity', 'price', 'total_price', 'discount',
         ];
 
         public function order()

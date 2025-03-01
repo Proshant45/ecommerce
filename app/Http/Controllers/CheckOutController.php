@@ -138,7 +138,8 @@
                 ]);
                 foreach ($cart_items as $cart_item) {
                     $cart_item->product->decrement('stock', $cart_item->quantity);
-                    $price_after_discount = $cart_item->product->price - ($cart_item->product->discount_rate) / 100;
+                    $price_after_discount = ($cart_item->product->price -
+                            ($cart_item->product->price * (($cart_item->product->discount_rate) / 100))) * $cart_item->quantity;
                     $order_item = $order->items()->create([
                         'order_id' => $order->id,
                         'product_id' => $cart_item->product_id,
@@ -147,6 +148,8 @@
                         'total_price' => $cart_item->product->price * $cart_item->quantity,
                         'product_name' => $cart_item->product->name,
                         'product_image' => $cart_item->product->image,
+                        'discount' => $price_after_discount,
+
 
                     ]);
                 }

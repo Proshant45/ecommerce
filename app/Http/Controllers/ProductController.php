@@ -20,7 +20,7 @@
         public function index()
         {
             $categories = Category::latest()->get()->take(5);
-            $products = Product::paginate(20);
+            $products = Product::latest()->paginate(10);
 
             return view('frontend.shop', ['products' => $products, 'categories' => $categories]);
         }

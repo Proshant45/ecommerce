@@ -9,10 +9,12 @@
     use App\Http\Controllers\OrderController;
     use App\Http\Controllers\ProductController;
     use App\Http\Controllers\ProfileController;
+    use App\Http\Controllers\SearchController;
     use App\Http\Controllers\WishlistController;
     use Illuminate\Support\Facades\Route;
 
     Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/search', SearchController::class)->name('search');
     Route::get('/about', [HomeController::class, 'about'])->name('about');
     Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
     Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

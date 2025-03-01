@@ -40,7 +40,10 @@
                     </tr>
                     </thead>
                     <tbody>
+                    @php
+                        $total_discount = 0;
 
+                    @endphp
                     @foreach($order->items as $orderItem)
                         <tr>
                             <td><img src="{{$orderItem->product_name}}/images/cart/1.jpg" alt="Product"
@@ -50,16 +53,11 @@
                             <td>{{$orderItem->quantity}}</td>
                             <td>{{$orderItem->price}}</td>
                             <td>{{$orderItem->price * $orderItem->quantity}}</td>
-
+                            @php
+                                $total_discount += $orderItem->discount;
+                            @endphp
                         </tr>
                     @endforeach
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Shipping</td>
-                        <td>{{$order->shipping_price}}</td>
-                    </tr>
                     <tr>
                         <td></td>
                         <td></td>
@@ -71,9 +69,24 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td>Discounts</td>
+                        <td>{{$total_discount}}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Shipping</td>
+                        <td>{{$order->shipping_price}}</td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><strong> Total</strong></td>
                         <td>
-                            <strong>{{$order->total_price + $order->shipping_price}}</strong>
+                            <strong>{{$order->total_price + $order->shipping_price -$total_discount}}</strong>
                         </td>
                     </tr>
                     </tbody>

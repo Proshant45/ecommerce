@@ -15,8 +15,9 @@
         <div class="row">
             <div class="col-md-8 offset-md-2 col-12">
                 <div class="search-form">
-                    <form action="#">
-                        <input type="text" placeholder="Search Here...">
+                    <form action="/search" method="get">
+                        @csrf
+                        <input type="text" placeholder="Search Here..." name="q">
                         <button><i class="fa fa-search"></i></button>
                     </form>
                 </div>
@@ -170,7 +171,7 @@
                                     <li>Discount: <span class="pull-right">${{$total - $price_after_discount}}</span>
                                     </li>
                                     <li>
-                                        <button>Check Out</button>
+                                        <button><a href="/checkout">Check Out</a></button>
                                     </li>
                                 @endif
 
@@ -196,7 +197,7 @@
                                             </div>
                                         </li>
                                         @php
-                                            $price_after_discount += $item->product->price -($item->product->price* (($item->product->discount_rate)/100));
+                                            $price_after_discount += ($item->product->price -($item->product->price* (($item->product->discount_rate)/100)))*$item->quantity;
                                             $total += $item->quantity * $item->product->price;
                                         @endphp
                                     @endforeach
