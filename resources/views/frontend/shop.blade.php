@@ -1,7 +1,4 @@
 <x-frontend.layout>
-
-    <!-- product-area start -->
-
     <div class="product-area pt-100">
         <div class="container">
             <div class="row">
@@ -9,11 +6,15 @@
                     <div class="product-menu">
                         <ul class="nav justify-content-center">
                             <li>
-                                <a class="active" data-toggle="tab" href="#all">All product</a>
+                                <a class="{{ request('category') ? '' : 'active' }}" href="{{ route('shop.index') }}">All
+                                    products</a>
                             </li>
                             @foreach($categories as $category)
                                 <li>
-                                    <a data-toggle="tab" href="#{{$category->slug}}">{{$category->name}}</a>
+                                    <a class="{{ request('category') == $category->slug ? 'active' : '' }}"
+                                       href="{{ route('shop.index', ['category' => $category->slug]) }}">
+                                        {{ $category->name }}
+                                    </a>
                                 </li>
                             @endforeach
 
@@ -21,8 +22,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="tab-content">
-                <div class="tab-pane active" id="all">
+                <div class="tab-pane active">
                     <ul class="row">
                         @foreach($products as $product)
                             <li class="col-xl-3 col-lg-4 col-sm-6 col-12">
@@ -58,58 +60,11 @@
                             </li>
                         @endforeach
                     </ul>
-                    {{ $products->links() }}
+                    {{ $products->appends(request()->query())->links() }}
                 </div>
-
-                @foreach($categories as $category)
-                    <div class="tab-pane" id="{{$category->slug}}">
-                        <div class="row">
-                            @php
-                                $category_product = $category->products()->paginate(8);
-                            @endphp
-                            @foreach($category_product as $product)
-                                <div class=" col-xl-3 col-lg-4 col-sm-6 col-12">
-                                    <div class="product-wrap">
-                                        <div class="product-img">
-                                            <span style="z-index:1">{{$product->discount_rate}} % OFF</span>
-                                            <img src="{{asset('assets')}}/images/product/18.jpg" alt="">
-                                            <div class="product-icon flex-style">
-                                                <ul>
-                                                    <li>
-                                                        <a data-toggle="modal" data-target="#exampleModalCenter"
-                                                           href="javascript:void(0);"><i class="fa fa-eye"></i></a>
-                                                    </li>
-                                                    <li><a href="wishlist.html"><i class="fa fa-heart"></i></a></li>
-                                                    <li><a href="cart.html"><i class="fa fa-shopping-bag"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-content">
-                                            <h3><a href="/">{{$product->name}}</a></h3>
-                                            <p class="pull-left">
-                                                <del class="pr-3">{{$product->price}}</del>
-                                                <span>  {{$product->price - (($product->discount_rate)/100)*$product->price}} </span>
-                                            </p>
-                                            <ul class="pull-right d-flex">
-                                                @for($i = 1; $i <= $product->averageRating(); $i++)
-                                                    <li><i class="fa fa-star"></i></li>
-                                                @endfor
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            @endforeach
-                            {{ $category_product->links( ) }}
-                        </div>
-                    </div>
-                @endforeach
-
             </div>
         </div>
     </div>
-    </div>
-
+    
     <x-frontend.news-letter/>
 </x-frontend.layout>

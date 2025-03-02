@@ -17,13 +17,23 @@
         /**
          * Display a listing of the resource.
          */
-        public function index()
+        public function index(Request $request)
         {
-            $categories = Category::latest()->get()->take(5);
-            $products = Product::latest()->paginate(10);
+            $categories = Category::latest()->get()->take(3);
 
-            return view('frontend.shop', ['products' => $products, 'categories' => $categories]);
+            if ($request->has('category')) {
+                $category = Category::where('slug', $request->category)->firstOrFail();
+                $products = $category->products()->latest()->paginate(12);
+            } else {
+                $products = Product::latest()->paginate(12);
+            }
+
+            return view('frontend.shop', [
+                'products' => $products,
+                'categories' => $categories
+            ]);
         }
+
 
         public function show(string $slug)
         {
